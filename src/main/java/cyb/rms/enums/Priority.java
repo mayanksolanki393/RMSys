@@ -1,8 +1,16 @@
 package cyb.rms.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum Priority {
 	
-	BLOCKER, CRITICAL, MAJOR, MINOR, TRIVIAL, TBD;
+	@JsonProperty("BLOCKER")BLOCKER,
+	@JsonProperty("CRITICAL")CRITICAL,
+	@JsonProperty("MAJOR")MAJOR,
+	@JsonProperty("MINOR")MINOR,
+	@JsonProperty("TRIVIAL")TRIVIAL,
+	@JsonProperty("TBD")TBD;
+	
 	
 	//TBD -- To Be Decided
 

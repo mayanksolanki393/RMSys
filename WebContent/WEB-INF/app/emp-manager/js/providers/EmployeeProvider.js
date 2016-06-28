@@ -1,5 +1,5 @@
 angular.module('empApp').provider('EmployeeService',function(){
-	var baseUrl = "http://localhost:6060/rms/";
+	var baseUrl = "http://localhost:9090/rms/";
 	var relativeUrl = "emp"
 	return {
 		setBaseUrl:function(value){

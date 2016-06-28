@@ -1,7 +1,11 @@
 package cyb.rms.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum Role {
 	
-	ADMIN, MANAGER, USER;
+	@JsonProperty("ADMIN")ADMIN,
+	@JsonProperty("MANAGER")MANAGER,
+	@JsonProperty("USER")USER;
 
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum Elaboration_status {
 	
-	@JsonProperty("ACTIVE")ACTIVE, @JsonProperty("DELETED")DELETED;
+	@JsonProperty("ACTIVE")ACTIVE,
+	@JsonProperty("DELETED")DELETED;
 
 }

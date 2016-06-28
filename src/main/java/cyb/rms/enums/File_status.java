@@ -1,7 +1,10 @@
 package cyb.rms.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum File_status {
 	
-	ACTIVE, DELETED;
+	@JsonProperty("ACTIVE")ACTIVE,
+	@JsonProperty("DELETED")DELETED;
 
 }
