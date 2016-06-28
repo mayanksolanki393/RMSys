@@ -1,0 +1,73 @@
+<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}"
+	close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</uib-alert>
+<div class="panel panel-default theme-panel">
+	<div class="panel-heading">Add Employee Form</div>
+	<div class="panel-content">
+		<div style="padding: 15px">
+			<form class="form">
+				<div class="form-group">
+					<label for="firstNameField">Employee's First Name</label> <input
+						type="text" class="form-control" id="nameField"
+						placeholder="Employee's First Name" data-ng-model="emp.firstName" />
+				</div>
+				<div class="form-group">
+					<label for="lastNameField">Employee's Last Name</label> <input
+						type="text" class="form-control" id="lastNameField"
+						placeholder="Employee's Last Name" data-ng-model="emp.lastName" />
+				</div>
+				<div class="form-group">
+					<label for="dobField">Employee's Date Of Birth</label> <input
+						type="date" class="form-control" id="dobField"
+						data-ng-model="emp.dateOfBirth" />
+				</div>
+				<div class="form-group">
+					<label for="salaryField">Employee's Salary</label> <input
+						type="number" class="form-control" id="salaryField"
+						placeholder="Employee's Salary" data-ng-model="emp.salary" />
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary" value="Add"
+						data-ng-click="openConfirm()"> <input type="reset"
+						class="btn btn-default" value="Clear">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="newEmpConfirmationModal.html">
+ 	   <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="dismissConfirm()">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+           
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <h5>Do you want to add a new employee with the following details?</h5>
+                <table class="table table-bordered">
+                	<tr>
+                		<td>First Name</td>
+                		<td>{{emp.firstName}}</td>
+                	</tr>
+                	<tr>
+                		<td>Last Name</td>
+                		<td>{{emp.lastName}}</td>
+                	</tr>
+                	<tr>
+                		<td>Date of Birth</td>
+                		<td>{{emp.dateOfBirth | date}}</td>
+                	</tr> 
+                	<tr>
+                		<td>Salary</td>
+                		<td>{{emp.salary}}</td>
+                	</tr>
+                </table>
+            </div>
+           
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-ng-click="add()">yes</button>
+                <button type="button" class="btn btn-default" ng-click="dismissConfirm()">No! Wait</button>
+            </div>
+</script>
