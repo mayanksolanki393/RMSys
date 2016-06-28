@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,8 @@ public class GenricDoaTest {
 	@Qualifier(value="empGenericDao")
 	IGenericDao<Employee, Long> empDao;
 
+	Logger LOG = Logger.getLogger(GenricDoaTest.class);
+	
 	@Test
 	@Rollback(value = true)
 	public void saveTest() throws Exception {
@@ -103,7 +106,8 @@ public class GenricDoaTest {
 			emp = empDao.get(emp.getId());
 			Assert.fail();
 		} catch (EntityNotFoundException ex) {
-
+			LOG.error(ex);
+			LOG.info("[ GENERIC DAO ] delete passed");
 		}
 	}
 

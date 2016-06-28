@@ -3,6 +3,7 @@ package cyb.rms.daos.test;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,8 @@ public class EmpDaoTest {
 	@Autowired
 	IEmployeeDao empDao;
 
+	Logger LOG = Logger.getLogger(EmpDaoTest.class);
+	
 	@Test
 	@Rollback(value=true)
 	public void getListByNameTest() throws Exception{
@@ -72,6 +75,8 @@ public class EmpDaoTest {
 		}
 		catch(Exception ex){
 			//test passed
+			LOG.error(ex);
+			LOG.info("delete Employee Passed");
 		}
 	}
 }
