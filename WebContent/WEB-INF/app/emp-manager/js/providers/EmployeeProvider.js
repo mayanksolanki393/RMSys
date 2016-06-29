@@ -17,6 +17,7 @@ angular.module('empApp').provider('EmployeeService',function(){
 					.then(function(data){
 						deferred.resolve(data);
 					},function(error){
+						$log.error(error);
 						throw error;
 					});
 					return deferred.promise;
@@ -29,6 +30,7 @@ angular.module('empApp').provider('EmployeeService',function(){
 					.then(function(data){
 						deferred.resolve(data);
 					},function(error){
+						$log.error(error);
 						throw error;
 					});
 					return deferred.promise;
@@ -44,6 +46,7 @@ angular.module('empApp').provider('EmployeeService',function(){
 					.then(function(data){
 						deferred.resolve(data);
 					},function(error){
+						$log.error(error);
 						throw error;
 					});
 					return deferred.promise;

@@ -64,8 +64,8 @@
 	<script src="components/holder.min.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="components/ie10-viewport-bug-workaround.js"></script>
-	<script src="common/modules/HttpExceptionHandeler.js"></script>
 	<script src="app/emp-manager/app.js"></script>
+	<script src="app/common/modules/HttpExceptionHandeler.js"></script>
 	<script src="app/emp-manager/js/controllers/EmployeeController.js"></script>
 	<script src="app/emp-manager/js/controllers/NewEmployeeController.js"></script>
 	<script src="app/emp-manager/js/providers/EmployeeProvider.js"></script>

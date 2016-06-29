@@ -33,7 +33,7 @@ public class ORMExceptionHandler {
 	    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)  // 500
 	    @ExceptionHandler(Exception.class)
 	    public void handleConflict(Exception ex) {
-	    	LOG.error(ex);
+	    	LOG.error(ex.getCause());
 	    }
 	    
 	    
