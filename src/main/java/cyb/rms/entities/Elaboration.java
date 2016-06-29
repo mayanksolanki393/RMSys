@@ -2,6 +2,8 @@ package cyb.rms.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,107 +23,137 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import cyb.rms.enums.RmsEnums.ElaborationStatus;
+
 @Entity
-@Table(name="ELABORATIONS")
-public class Elaboration implements Serializable{
-	/**
-	 * 
-	 */
+@Table(name = "ELABORATIONS")
+public class Elaboration implements Serializable {
+	
 	private static final long serialVersionUID = 4112167127514138700L;
+	
+	//state members
 	private long id;
 	private String title;
 	private String elaboration;
 	private User elaborationBy;
-	private Date createdOn; 
+	private Date createdOn;
 	private Date lastModifiedOn;
-	private ElaborationStatus status; 
-	private Set<AppFile> file;//fk  	ELABORATION_FILE	OneToMany	FILE
+	private ElaborationStatus status;
+	private List<AppFile> files;
 	
+	//constructor
+	public Elaboration(){
+		initNulls();
+	}
+	
+	public Elaboration(String title, String elaboration, User elaborationBy,
+			Date createdOn, Date lastModifiedOn, ElaborationStatus status,
+			List<AppFile> files) {
+		super();
+		this.title = title;
+		this.elaboration = elaboration;
+		this.elaborationBy = elaborationBy;
+		this.createdOn = createdOn;
+		this.lastModifiedOn = lastModifiedOn;
+		this.status = status;
+		this.files = files;
+		initNulls();
+	}
+
+	public Elaboration(long id, String title, String elaboration,
+			User elaborationBy, Date createdOn, Date lastModifiedOn,
+			ElaborationStatus status, List<AppFile> files) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.elaboration = elaboration;
+		this.elaborationBy = elaborationBy;
+		this.createdOn = createdOn;
+		this.lastModifiedOn = lastModifiedOn;
+		this.status = status;
+		this.files = files;
+		initNulls();
+	}
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID")
-	public long getId()
-	{
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	public long getId() {
 		return id;
 	}
-	public void setId(long id) 
-	{
+	public void setId(long id) {
 		this.id = id;
 	}
-	
-	@Column(name="TITLE",length=4096,nullable=false)
-	public String getTitle() 
-	{
+
+	@Column(name = "TITLE", length = 255, nullable = false)
+	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) 
-	{
+	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	@Column(name="ELABORATION",length=255,nullable=false)
-	public String getElaboration() 
-	{
+
+	@Column(name = "ELABORATION", length = 4096, nullable = false)
+	public String getElaboration() {
 		return elaboration;
 	}
-	public void setElaboration(String elaboration) 
-	{
+	public void setElaboration(String elaboration) {
 		this.elaboration = elaboration;
 	}
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	public User getElaborationBy()
-	{
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ELABORATEDBY")
+	public User getElaborationBy() {
 		return elaborationBy;
 	}
-	public void setElaborationBy(User elaborationBy)
-	{
+
+	public void setElaborationBy(User elaborationBy) {
 		this.elaborationBy = elaborationBy;
 	}
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name="CREATEDON",nullable=false)
-	public Date getCreatedOn()
-	{
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATEDON", nullable = false)
+	public Date getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn)
-	{
+
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name="LASTMODIFIEDON",nullable=false)
-	public Date getLastModifiedOn() 
-	{
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LASTMODIFIEDON", nullable = false)
+	public Date getLastModifiedOn() {
 		return lastModifiedOn;
 	}
-	public void setLastModifiedOn(Date lastModifiedOn)
-	{
+
+	public void setLastModifiedOn(Date lastModifiedOn) {
 		this.lastModifiedOn = lastModifiedOn;
 	}
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="STATUS",nullable=false)
-	public ElaborationStatus getStatus()
-	{
+	@Column(name = "STATUS", nullable = false)
+	public ElaborationStatus getStatus() {
 		return status;
 	}
-	public void setStatus(ElaborationStatus status)
-	{
+
+	public void setStatus(ElaborationStatus status) {
 		this.status = status;
 	}
-	
-	@OneToMany(cascade=CascadeType.ALL)  
-    @JoinTable(name="ELABORATION_FILE",  
-    joinColumns={@JoinColumn(name="elaboration_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="file_id", referencedColumnName="id")})  
-	public Set<AppFile> getFile() {
-		return file;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "ELABORATIONS_FILES", 
+		joinColumns = { 
+			@JoinColumn(name = "ELABORATIONID")}, 
+			inverseJoinColumns = {@JoinColumn(name = "FILEID") 
+		})
+	public List<AppFile> getFiles() {
+		return files;
 	}
-	public void setFile(Set<AppFile> file) {
-		this.file = file;
+
+	public void setFiles(List<AppFile> files) {
+		this.files = files;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -129,6 +161,7 @@ public class Elaboration implements Serializable{
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -143,10 +176,9 @@ public class Elaboration implements Serializable{
 		return true;
 	}
 	
-	
-
+	public void initNulls(){
+		if(files==null){
+			files = new LinkedList<AppFile>();
+		}
+	}
 }
-
-
-
-

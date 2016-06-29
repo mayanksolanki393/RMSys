@@ -2,6 +2,9 @@ package cyb.rms.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -18,44 +21,100 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import cyb.rms.enums.RmsEnums;
 import cyb.rms.enums.RmsEnums.Constraints;
 import cyb.rms.enums.RmsEnums.Priority;
 import cyb.rms.enums.RmsEnums.RequirementStatus;
-
 import cyb.rms.enums.RmsEnums.Type;
 
 @Entity
 @Table(name="REQUIREMENTS")
 public class Requirement implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8613161674360685751L;
-	private long id;//PK ID
-	private String title;//not_null , length=255	TITLE
-	private String description;//length=4096	DESCRIPTION
-	private String shortTitle	;//	length=255	SHORTTITLE	--	--	--	--
-	private Set<User> creator		;//FK , not_null	--	--	REQUIREMENT_CREATOR	ManyToMany	USER
-	private	Set<User> contributor	;//	FK	--	--	REQUIREMENT_CONTIBUTOR	ManyToMany	USER
-	private	Date createdOn	;//	not_null	CREATEDON	--	--	--	--
-	private	Date lastModifiedOn	;//	not_null	LASTMODIFIEDON	--	--	--	--
-	private	Type type;//(enum)	not_null	TYPE	--	--	--	--
-	private	Set<Constraints> constraints;//	TBD	TBD	TBD	--	TBD	TBD
-	private	Set<String> links;//	TBD	TBD	TBD	TBD	--	TBD	TBD
-	private	Set<Elaboration> elaboration;//	TBD	TBD	TBD	--	TBD	TBD
-										//private	elaboratedBy	List<User>;//	FK	--	--	REQUIREMENT_ELABORATOR	ManyToMany	USER	
-	private	Requirement parent;//	FK	--	PARENTID	--	OneToOne	REQUIREMENT
-	private	Priority priority;//	not_null	PRIORITY	--	--	--	--
-	private RequirementStatus	status;	// 	not_null	STATUS	--	--	--	--
-	private Set<AppFile> files;	//FK	--	--	REQUIREMENT_FILE	OneToMany	FILE
-	private Project	project;//	not_null	-	-	PROJECT_REQUIREMENT	ManyToOne	PROJECT
+	
+	//state members
+	private long id;
+	private String title;
+	private String description;
+	private String shortTitle;
+	private List<User> creators;
+	private	List<User> contributors;
+	private	Date createdOn;
+	private	Date lastModifiedOn;
+	private	Type type;
+	private	Set<Constraints> constraints;
+	private	Set<String> links;
+	private	List<Elaboration> elaborations;	
+	private	Requirement parent;
+	private	Priority priority;
+	private RequirementStatus status;
+	private List<AppFile> files;
+	private Project	project;
+	
+	public Requirement(){
+		initNulls();
+	}
+	
+	public Requirement(String title, String description, String shortTitle,
+			List<User> creators, List<User> contributors, Date createdOn,
+			Date lastModifiedOn, Type type, Set<Constraints> constraints,
+			Set<String> links, List<Elaboration> elaborations,
+			Requirement parent, Priority priority, RequirementStatus status,
+			List<AppFile> files, Project project) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.shortTitle = shortTitle;
+		this.creators = creators;
+		this.contributors = contributors;
+		this.createdOn = createdOn;
+		this.lastModifiedOn = lastModifiedOn;
+		this.type = type;
+		this.constraints = constraints;
+		this.links = links;
+		this.elaborations = elaborations;
+		this.parent = parent;
+		this.priority = priority;
+		this.status = status;
+		this.files = files;
+		this.project = project;
+		initNulls();
+	}
 	
 	
+	public Requirement(long id, String title, String description,
+			String shortTitle, List<User> creators, List<User> contributors,
+			Date createdOn, Date lastModifiedOn, Type type,
+			Set<Constraints> constraints, Set<String> links,
+			List<Elaboration> elaborations, Requirement parent,
+			Priority priority, RequirementStatus status, List<AppFile> files,
+			Project project) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.shortTitle = shortTitle;
+		this.creators = creators;
+		this.contributors = contributors;
+		this.createdOn = createdOn;
+		this.lastModifiedOn = lastModifiedOn;
+		this.type = type;
+		this.constraints = constraints;
+		this.links = links;
+		this.elaborations = elaborations;
+		this.parent = parent;
+		this.priority = priority;
+		this.status = status;
+		this.files = files;
+		this.project = project;
+		initNulls();
+	}
+
+
 	@Id
 	@Column(name="ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -65,6 +124,7 @@ public class Requirement implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	@Column(name="TITLE",nullable=false,length=255)
 	public String getTitle() {
 		return title;
@@ -73,7 +133,6 @@ public class Requirement implements Serializable{
 		this.title = title;
 	}
 	
-	
 	@Column(name="DESCRIPTION",length=4096)
 	public String getDescription() {
 		return description;
@@ -81,6 +140,7 @@ public class Requirement implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	@Column(name="SHORTTITLE",length=255)
 	public String getShortTitle() {
 		return shortTitle;
@@ -93,23 +153,24 @@ public class Requirement implements Serializable{
     @JoinTable(name="REQUIREMENT_CREATOR",  
     joinColumns={@JoinColumn(name="requirement_id", referencedColumnName="id")},  
     inverseJoinColumns={@JoinColumn(name="creator_id", referencedColumnName="id")})  
-	public Set<User> getCreator() {
-		return creator;
+	public List<User> getCreators() {
+		return creators;
 	}
-	public void setCreator(Set<User> creator) {
-		this.creator = creator;
+	public void setCreators(List<User> creator) {
+		this.creators = creator;
 	}
 	
 	@ManyToMany(cascade=CascadeType.ALL)  
-    @JoinTable(name="REQUIREMENT_CONTIBUTOR",  
-    joinColumns={@JoinColumn(name="requirement_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="contributor_id", referencedColumnName="id")})  
-	public Set<User> getContributor() {
-		return contributor;
+    @JoinTable(name="REQUIREMENT_CONTRIBUTORS",  
+    joinColumns={@JoinColumn(name="REQUIREMENTID")},  
+    inverseJoinColumns={@JoinColumn(name="CONTRIBUTORID")})  
+	public List<User> getContributors() {
+		return contributors;
 	}
-	public void setContributor(Set<User> contributor) {
-		this.contributor = contributor;
+	public void setContributors(List<User> contributor) {
+		this.contributors = contributor;
 	}
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name="CREATEDON",nullable=false)
 	public Date getCreatedOn() {
@@ -118,6 +179,7 @@ public class Requirement implements Serializable{
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name="LASTMODIFIEDON",nullable=false)
 	public Date getLastModifiedOn() {
@@ -126,6 +188,7 @@ public class Requirement implements Serializable{
 	public void setLastModifiedOn(Date lastModifiedOn) {
 		this.lastModifiedOn = lastModifiedOn;
 	}
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="TYPE",nullable=false)
 	public Type getType() {
@@ -134,6 +197,7 @@ public class Requirement implements Serializable{
 	public void setType(Type type) {
 		this.type = type;
 	}
+	
 	@ElementCollection
 	@Enumerated(EnumType.STRING)
 	@Column(name="CONSTRAINTS")
@@ -154,22 +218,20 @@ public class Requirement implements Serializable{
 	}
 	
 	@OneToMany(cascade=CascadeType.ALL)  
-    @JoinTable(name="REQUIREMENT_ELABORATION",  
-    joinColumns={@JoinColumn(name="requirement_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="elaboration_id", referencedColumnName="id")})  
-	public Set<Elaboration> getElaboration() {
-		return elaboration;
+    @JoinTable(name="REQUIREMENT_ELABORATIONS",  
+    joinColumns={@JoinColumn(name="REQUIREMENTID")},  
+    inverseJoinColumns={@JoinColumn(name="ELABORATIONID")})  
+	public List<Elaboration> getElaborations() {
+		return elaborations;
 	}
-	public void setElaboration(Set<Elaboration> elaboration) {
-		this.elaboration = elaboration;
+	public void setElaborations(List<Elaboration> elaboration) {
+		this.elaborations = elaboration;
 	}
 	
-	
-
-	@OneToOne(cascade=CascadeType.ALL)  
-    @JoinTable(name="REQUIREMENT_SUBREQUIREMENT",  
-    joinColumns={@JoinColumn(name="requirement_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="subrequirement_id", referencedColumnName="id")})  
+	@ManyToOne(cascade=CascadeType.ALL)  
+    @JoinTable(name="REQUIREMENT_SUBREQUIREMENTS",  
+    joinColumns={@JoinColumn(name="REQUIREMENTID")},  
+    inverseJoinColumns={@JoinColumn(name="SUBREQUIREMENTID")})  
 	public Requirement getParent() {
 		return parent;
 	}
@@ -194,29 +256,28 @@ public class Requirement implements Serializable{
 	public void setStatus(RequirementStatus status) {
 		this.status = status;
 	}
+	
 	@OneToMany(cascade=CascadeType.ALL)  
-    @JoinTable(name="REQUIREMENT_FILE",  
-    joinColumns={@JoinColumn(name="requirement_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="file_id", referencedColumnName="id")})  
-	public Set<AppFile> getFiles() {
+    @JoinTable(name="REQUIREMENT_FILES",  
+    	joinColumns={@JoinColumn(name="REQUIREMENTID")},  
+    	inverseJoinColumns={@JoinColumn(name="FILEID")})  
+	public List<AppFile> getFiles() {
 		return files;
 	}
-	public void setFiles(Set<AppFile> files) {
+	public void setFiles(List<AppFile> files) {
 		this.files = files;
 	}
 	
-	
 	@ManyToOne(cascade=CascadeType.ALL)  
-    @JoinTable(name="PROJECT_REQUIREMENT",  
-    joinColumns={@JoinColumn(name="requirement_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="id")})  
+    @JoinTable(name="PROJECT_REQUIREMENTS",  
+    joinColumns={@JoinColumn(name="PROJECTID")},  
+    inverseJoinColumns={@JoinColumn(name="REQUIREMENTID")})  
 	public Project getProject() {
 		return project;
 	}
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
 	
 	@Override
 	public int hashCode() {
@@ -225,6 +286,7 @@ public class Requirement implements Serializable{
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -238,17 +300,25 @@ public class Requirement implements Serializable{
 			return false;
 		return true;
 	}
-
-
 	
-
-
+	public void initNulls(){
+		if(creators==null){
+			creators = new LinkedList<User>();
+		}
+		if(contributors==null){
+			contributors = new LinkedList<User>();
+		}
+		if(constraints==null){
+			constraints = new HashSet<Constraints>();
+		}
+		if(links==null){
+			links = new HashSet<String>();
+		}
+		if(elaborations==null){
+			elaborations = new LinkedList<Elaboration>();
+		}
+		if(files==null){
+			files = new LinkedList<AppFile>();
+		}
+	}
 }
-
-
-
-
-
-							
-
-

@@ -1,6 +1,7 @@
 package cyb.rms.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,28 +18,57 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import cyb.rms.enums.RmsEnums.Role;
+
 @Entity
-//@table is nessary to create better tables
 @Table(name="USERS")
 public class User implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1855984087920682493L;
-	private long id;//PK
-	private String username;//notnull length=255	USERNAME	
-	private String password;//notnull length=255	PASSWORD
-	private String email;//notnull length=255	EMAIL
-	private Role role;// (enum)	not_null	ROLE	
-	private String designation;	//length=255	DESIGNATION	
-	private String technology;//		length=255	TECHNOLOGY	--
-	private Set<Project> projects;//FK
 	
+	//state members
+	private long id;
+	private String username;	
+	private String password;
+	private String email;
+	private Role role;	
+	private String designation;	
+	private String technology;
+	private Set<Project> projects;
+
+	
+	//constructors
+	public User(){
+		initNulls();
+	}
+	
+	public User(String username, String password, String email, Role role,String designation, String technology, Set<Project> projects) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.designation = designation;
+		this.technology = technology;
+		this.projects = projects;
+		initNulls();
+	}
+
+	public User(long id, String username, String password, String email,Role role, String designation, String technology,Set<Project> projects) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.designation = designation;
+		this.technology = technology;
+		this.projects = projects;
+		initNulls();
+	}
+
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	//@column is nessary unless its an join type field creates better table
 	@Column(name="ID")
 	public long getId() {
 		return id;
@@ -46,6 +76,7 @@ public class User implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	@Column(name="USERNAME",length=255,nullable=false)
 	public String getUsername() {
 		return username;
@@ -53,6 +84,7 @@ public class User implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
 	@Column(name="PASSWORD",length=255,nullable=false)
 	public String getPassword() {
 		return password;
@@ -60,6 +92,7 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	@Column(name="EMAIL",length=255,nullable=false)
 	public String getEmail() {
 		return email;
@@ -67,6 +100,7 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="ROLE",nullable=false)
 	public Role getRole() {
@@ -83,6 +117,7 @@ public class User implements Serializable {
 	public void setDesignation(String designation) {
 		this.designation = designation;
 	}
+	
 	@Column(name="TECHNOLOGY",length=255)
 	public String getTechnology() {
 		return technology;
@@ -90,11 +125,8 @@ public class User implements Serializable {
 	public void setTechnology(String technology) {
 		this.technology = technology;
 	}
-	//Join Table :USERS_PROJECTS TYPE manyTomany
-	 @ManyToMany(cascade=CascadeType.ALL)  
-	    @JoinTable(name="USER_PROJECT",  
-	    joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},  
-	    inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="id")})  
+	
+	@ManyToMany(mappedBy="users")
 	public Set<Project> getProjects() {
 		return projects;
 	}
@@ -102,7 +134,13 @@ public class User implements Serializable {
 		this.projects = projects;
 	}
 	
+	public void initNulls(){
+		if(projects == null){
+			this.projects = new HashSet<Project>();
+		}
+	}
 	
+	//equals and hashcode
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,6 +148,7 @@ public class User implements Serializable {
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -123,9 +162,6 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-	
-
-	
 	
 	
 }

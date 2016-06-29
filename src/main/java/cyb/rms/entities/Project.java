@@ -2,6 +2,8 @@ package cyb.rms.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -26,33 +28,66 @@ import cyb.rms.enums.RmsEnums.ProjectStatus;
 //@table is nessary to create better tables
 @Table(name="PROJECTS")
 public class Project implements Serializable{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1581627407212776620L;
-	private long id;//PK ID
-	private String title;//not_null , length=255	TITLE	-
-	private String description;//length=4096	DESCRIPTION	
-	private String shortTitle;//length=255	SHORTTITLE	
-	private User creator;//	FK	--	CREATORID	--	ManyToOne	USER
-	private Date createdOn;//		not_null	CREATEDON
-	private Date lastModifiedOn;//	not_null	LASTMODIFIEDON
-	private ProjectStatus status;	//	not_null	STATUS
-	private Set<User> users;//USER_PROJECT	ManyToMany
-	//private Set<Requirement> requirements;//PROJECT_REQUIREMENT	ManyToMany	
+	
+	//state members
+	private long id;
+	private String title;
+	private String description;	
+	private String shortTitle;	
+	private User creator;
+	private Date createdOn;
+	private Date lastModifiedOn;
+	private ProjectStatus status;
+	private List<User> users;
+	//private Set<Requirement> requirements;	
+	
+	//constructors
+	public Project(){
+		initNulls();
+	}
+	
+	public Project(String title, String description, String shortTitle,
+			User creator, Date createdOn, Date lastModifiedOn,
+			ProjectStatus status, List<User> users) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.shortTitle = shortTitle;
+		this.creator = creator;
+		this.createdOn = createdOn;
+		this.lastModifiedOn = lastModifiedOn;
+		this.status = status;
+		this.users = users;
+		initNulls();
+	}
+	
+	public Project(long id, String title, String description,
+			String shortTitle, User creator, Date createdOn,
+			Date lastModifiedOn, ProjectStatus status, List<User> users) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.shortTitle = shortTitle;
+		this.creator = creator;
+		this.createdOn = createdOn;
+		this.lastModifiedOn = lastModifiedOn;
+		this.status = status;
+		this.users = users;
+		initNulls();
+	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	//@column is nessary unless its an join type field creates better table
 	@Column(name="ID")
-	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	@Column(name="TITLE",length=255,nullable=false)
 	public String getTitle() {
 		return title;
@@ -68,6 +103,7 @@ public class Project implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	@Column(name="SHORTTITLE",length=255)
 	public String getShortTitle() {
 		return shortTitle;
@@ -86,21 +122,23 @@ public class Project implements Serializable{
 	}
 	
 	@Column(name="CREATEDON",nullable=false)
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreatedOn() {
 		return createdOn;
 	}
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+	
 	@Column(name="LASTMODIFIEDON",nullable=false)
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getLastModifiedOn() {
 		return lastModifiedOn;
 	}
 	public void setLastModifiedOn(Date lastModifiedOn) {
 		this.lastModifiedOn = lastModifiedOn;
 	}
+	
 	@Column(name="STATUS",nullable=false)
 	@Enumerated(EnumType.STRING)
 	public ProjectStatus getStatus() {
@@ -111,17 +149,16 @@ public class Project implements Serializable{
 	}
 	
 
-	 @ManyToMany(cascade=CascadeType.ALL)  
-	    @JoinTable(name="USER_PROJECT",  
-	    joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},  
-	    inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="id")})
-	public Set<User> getUsers() {
+	 @ManyToMany(cascade=CascadeType.ALL)
+	 @JoinTable(name="USERS_PROJECTS",  
+	    joinColumns={@JoinColumn(name="PROJECTID")},  
+	    inverseJoinColumns={@JoinColumn(name="USERID")})
+	public List<User> getUsers() {
 		return users;
 	}
-	public void setUsers(Set<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	
 	
 	@Override
 	public int hashCode() {
@@ -130,6 +167,7 @@ public class Project implements Serializable{
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -144,8 +182,9 @@ public class Project implements Serializable{
 		return true;
 	}
 	
-	
-	
-	
-
+	public void initNulls(){
+		if(users==null){
+			users = new LinkedList<>();
+		}
+	}
 }
