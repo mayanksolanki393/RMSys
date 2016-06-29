@@ -2,7 +2,7 @@
  * 
  */
 
-angular.module("empApp",['ngRoute','ui.bootstrap','httpExceptionHandeler']);
+angular.module("empApp",['ngRoute','ui.bootstrap','rms.directives'/*,'httpExceptionHandeler'*/]);
 
 angular.module("empApp").config(['$routeProvider','$logProvider',function($routeProvider,$logProvider){
 	

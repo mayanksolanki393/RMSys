@@ -39,8 +39,18 @@
 					<li><a href="#/newemployee">Add New Employee</a></li>
 				</ul>
 			</div>
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"
-				data-ng-view></div>
+		<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" data-ng-view></div> -->
+			<div data-ng-controller="FilesController">
+				<ul>
+					<li data-ng-repeat="file in files">
+						{{file}}
+					</li>
+				</ul>
+				<div class="form-inline">
+					<div data-file-upload></div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 
@@ -69,6 +79,9 @@
 	<script src="app/emp-manager/js/controllers/EmployeeController.js"></script>
 	<script src="app/emp-manager/js/controllers/NewEmployeeController.js"></script>
 	<script src="app/emp-manager/js/providers/EmployeeProvider.js"></script>
+	<script src="app/common/directives/rmsDirectives.js"></script>
+	<script src="app/common/directives/fileupload/fileuploadattribute.js"></script>
+	<script src="app/emp-manager/js/controllers/FilesController.js"></script>
 	
 </body>
 </html>

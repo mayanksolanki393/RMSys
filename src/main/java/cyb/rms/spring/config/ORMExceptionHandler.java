@@ -1,11 +1,7 @@
 package cyb.rms.spring.config;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.apache.log4j.Logger;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class ORMExceptionHandler {
 		private final static Logger LOG = Logger.getLogger(ORMExceptionHandler.class);
 		
