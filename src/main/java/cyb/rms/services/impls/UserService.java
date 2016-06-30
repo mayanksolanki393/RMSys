@@ -46,7 +46,7 @@ public class UserService implements IUserSevrice {
 
 	@Override
 	public List<User> findUsersByName(String userName) throws DaoException {
-		
+		// will be called in spring security
 		return userDao.getUsersByName(userName);
 	}
 
