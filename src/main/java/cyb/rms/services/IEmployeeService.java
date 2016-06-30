@@ -2,10 +2,13 @@ package cyb.rms.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import cyb.rms.entities.Employee;
 import cyb.rms.exceptions.DaoException;
 
 //Service layer will not have any hibernate logic
+@Service
 public interface IEmployeeService {
 
 	public Employee addEmployee(Employee emp) throws DaoException;

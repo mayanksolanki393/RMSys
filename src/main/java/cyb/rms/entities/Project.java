@@ -18,6 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,8 +27,8 @@ import javax.persistence.TemporalType;
 import cyb.rms.enums.RmsEnums.ProjectStatus;
 
 @Entity
-//@table is nessary to create better tables
 @Table(name="PROJECTS")
+@NamedQuery(name="Project.list",query="Select p from Project p where p.status NOT IN('DELETED')")
 public class Project implements Serializable{
 	private static final long serialVersionUID = 1581627407212776620L;
 	
@@ -40,7 +42,7 @@ public class Project implements Serializable{
 	private Date lastModifiedOn;
 	private ProjectStatus status;
 	private List<User> users;
-	//private Set<Requirement> requirements;	
+	private List<Requirement> requirements;	
 	
 	//constructors
 	public Project(){
@@ -160,6 +162,15 @@ public class Project implements Serializable{
 		this.users = users;
 	}
 	
+	@OneToMany(mappedBy="project")
+	public List<Requirement> getRequirements() {
+		return requirements;
+	}
+
+	public void setRequirements(List<Requirement> requirements) {
+		this.requirements = requirements;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -185,6 +196,9 @@ public class Project implements Serializable{
 	public void initNulls(){
 		if(users==null){
 			users = new LinkedList<>();
+		}
+		if(requirements==null){
+			requirements = new LinkedList<>();
 		}
 	}
 }

@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import cyb.rms.enums.RmsEnums.FileType;
@@ -20,6 +21,7 @@ import cyb.rms.enums.RmsEnums.FileStatus;
 
 @Entity
 @Table(name="FILES")
+@NamedQuery(name="AppFile.list",query="Select af from AppFile af where af.status NOT IN('DELETED')")
 public class AppFile implements Serializable{
 	private static final long serialVersionUID = 637694787336335869L;
 	

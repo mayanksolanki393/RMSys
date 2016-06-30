@@ -25,7 +25,6 @@ public class GenericDao<E, PK extends Serializable> implements IGenericDao<E, PK
 	
 	public GenericDao(Class<E> typeParameterClass) throws DaoException {
 		this.typeParameterClass = typeParameterClass;
-		
 	}
 
 	@Override
@@ -71,7 +70,6 @@ public class GenericDao<E, PK extends Serializable> implements IGenericDao<E, PK
 
 	@Override
 	public List<E> list() throws DaoException {
-
 		Query query = em.createNamedQuery(getRealQueryName("list"),typeParameterClass);
 		List<Object> entities = query.getResultList();
 

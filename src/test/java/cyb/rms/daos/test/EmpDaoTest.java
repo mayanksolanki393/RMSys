@@ -70,7 +70,7 @@ public class EmpDaoTest {
 		
 		//fail test if result doesnot contains emp
 		try{
-			empDao.getEmployee(emp.getId());
+			Employee emp2 = empDao.getEmployee(emp.getId());
 			Assert.fail();
 		}
 		catch(Exception ex){

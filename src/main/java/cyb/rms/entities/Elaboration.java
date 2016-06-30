@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,6 +27,7 @@ import cyb.rms.enums.RmsEnums.ElaborationStatus;
 
 @Entity
 @Table(name = "ELABORATIONS")
+@NamedQuery(name="Elaboration.list",query="Select e from Elaboration e where e.status NOT IN('DELETED')")
 public class Elaboration implements Serializable {
 	
 	private static final long serialVersionUID = 4112167127514138700L;

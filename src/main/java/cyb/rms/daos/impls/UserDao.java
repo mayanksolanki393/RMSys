@@ -1,6 +1,6 @@
 package cyb.rms.daos.impls;
 
-import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,6 +28,26 @@ public class UserDao implements IUserDao {
 	@Override
 	public User saveUser(User user) throws DaoException {
 		return genUserDao.save(user);
+	}
+	@Override
+	public User updateUser(User usr) throws DaoException {
+		return genUserDao.update(usr);
+	}
+
+	@Override
+	public User removeUser(User usr) throws DaoException {
+		usr=genUserDao.get(usr.getId());// get user detail before removing 
+		return genUserDao.remove(usr);
+	}
+
+	@Override
+	public List<User> listUsers() throws DaoException {
+		return genUserDao.list();
+	}
+
+	@Override
+	public User getUser(long usrId) throws DaoException {	
+		return genUserDao.get(usrId);
 	}
 
 }

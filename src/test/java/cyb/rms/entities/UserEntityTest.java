@@ -23,7 +23,7 @@ public class UserEntityTest {
 	IGenericDao<User, Long> userGenericDao;
 	
 	@Test
-	@Rollback(value=false)
+	@Rollback(value=true)
 	public void saveTest() throws Exception{
 		User user = new User("mayank393","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
 		userGenericDao.save(user);

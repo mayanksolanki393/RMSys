@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,6 +34,7 @@ import cyb.rms.enums.RmsEnums.Type;
 
 @Entity
 @Table(name="REQUIREMENTS")
+@NamedQuery(name="Requirement.list",query="Select r from Requirement r where r.status NOT IN('DELETED')")
 public class Requirement implements Serializable{
 	private static final long serialVersionUID = -8613161674360685751L;
 	

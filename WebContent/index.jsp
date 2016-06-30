@@ -15,7 +15,7 @@
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">Requirement Management System</a>
-		</div>
+		</div> 
 	</nav>
 	
 	<div class="container well login-box center">
@@ -29,12 +29,12 @@
 			<div class="form-group">
 				<label for="email">Username</label> <input type="text"
 					class="form-control" name="username" placeholder="username"
-					autofocus="autofocus">
+					autofocus="autofocus" required>
 			</div>
 			<div class="form-group">
 				<label for="pwd">Password</label> <input type="password"
 					class="form-control" name="password" placeholder="password"
-					autocomplete="off">
+					autocomplete="off" required>
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">Submit</button>

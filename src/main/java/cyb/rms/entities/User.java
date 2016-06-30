@@ -15,14 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import cyb.rms.enums.RmsEnums.Role;
 
 @Entity
 @Table(name="USERS")
+@NamedQuery(name="User.list",query="Select u from User u")
 public class User implements Serializable {
-
 	private static final long serialVersionUID = -1855984087920682493L;
 	
 	//state members
@@ -77,7 +78,7 @@ public class User implements Serializable {
 		this.id = id;
 	}
 	
-	@Column(name="USERNAME",length=255,nullable=false)
+	@Column(name="USERNAME",length=255,nullable=false,unique=true)
 	public String getUsername() {
 		return username;
 	}
