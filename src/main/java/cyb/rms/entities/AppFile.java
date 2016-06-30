@@ -13,30 +13,50 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import cyb.rms.enums.RmsEnums.FileType;
 import cyb.rms.enums.RmsEnums.FileStatus;
 
 @Entity
-@Table(name="APPLICATIONFILES")
+@Table(name="FILES")
+@NamedQuery(name="AppFile.list",query="Select af from AppFile af WHERE af.status NOT IN('DELETED')")
 public class AppFile implements Serializable{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 637694787336335869L;
-	private long id;//pk
-	private String filename;//not_null, length=255	FILENAME
-	private Date addedOn ;//not_null	ADDEDON	
-	private FileStatus status;//not_null	STATUS
-	private User addedBy; //not_null	ADDEDBY	USERID	-	ManyToOne	USER
+	
+	//state members
+	private long id;
+	private String filename;
+	private Date addedOn ;	
+	private FileStatus status;
+	private User addedBy;
 	private FileType fileType;
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	//@column is nessary unless its an join type field creates better table
+	//constructors
+	public AppFile() {}
 	
+	public AppFile(String filename, Date addedOn, FileStatus status,User addedBy, FileType fileType) {
+		super();
+		this.filename = filename;
+		this.addedOn = addedOn;
+		this.status = status;
+		this.addedBy = addedBy;
+		this.fileType = fileType;
+	}
+	
+	public AppFile(long id, String filename, Date addedOn, FileStatus status,User addedBy, FileType fileType) {
+		super();
+		this.id = id;
+		this.filename = filename;
+		this.addedOn = addedOn;
+		this.status = status;
+		this.addedBy = addedBy;
+		this.fileType = fileType;
+	}
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	@Column(name="ID")
 	public long getId() {
 		return id;
@@ -60,6 +80,7 @@ public class AppFile implements Serializable{
 	public void setAddedOn(Date addedOn) {
 		this.addedOn = addedOn;
 	}
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="STATUS",nullable=false)
 	public FileStatus getStatus() {
@@ -69,7 +90,7 @@ public class AppFile implements Serializable{
 		this.status = status;
 	}
 	
-	@JoinColumn(name="USERID")
+	@JoinColumn(name="UPLOADEDBY")
 	@ManyToOne(cascade=CascadeType.ALL)
 	public User getAddedBy() {
 		return addedBy;
@@ -79,6 +100,7 @@ public class AppFile implements Serializable{
 	}
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name="FILETYPE")
 	public FileType getFileType() {
 		return fileType;
 	}
@@ -93,6 +115,7 @@ public class AppFile implements Serializable{
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -106,10 +129,4 @@ public class AppFile implements Serializable{
 			return false;
 		return true;
 	}
-	
-
-
 }
-
-
-
