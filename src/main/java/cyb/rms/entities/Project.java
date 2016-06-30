@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import cyb.rms.enums.EnumProvider.Project_Status;
+import cyb.rms.enums.RmsEnums.ProjectStatus;
 
 @Entity
 //@table is nessary to create better tables
@@ -36,7 +38,7 @@ public class Project implements Serializable{
 	private User creator;//	FK	--	CREATORID	--	ManyToOne	USER
 	private Date createdOn;//		not_null	CREATEDON
 	private Date lastModifiedOn;//	not_null	LASTMODIFIEDON
-	private Project_Status status;	//	not_null	STATUS
+	private ProjectStatus status;	//	not_null	STATUS
 	private Set<User> users;//USER_PROJECT	ManyToMany
 	//private Set<Requirement> requirements;//PROJECT_REQUIREMENT	ManyToMany	
 	
@@ -100,10 +102,11 @@ public class Project implements Serializable{
 		this.lastModifiedOn = lastModifiedOn;
 	}
 	@Column(name="STATUS",nullable=false)
-	public Project_Status getStatus() {
+	@Enumerated(EnumType.STRING)
+	public ProjectStatus getStatus() {
 		return status;
 	}
-	public void setStatus(Project_Status status) {
+	public void setStatus(ProjectStatus status) {
 		this.status = status;
 	}
 	
@@ -111,16 +114,37 @@ public class Project implements Serializable{
 	 @ManyToMany(cascade=CascadeType.ALL)  
 	    @JoinTable(name="USER_PROJECT",  
 	    joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},  
-	    inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="id")})  
+	    inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="id")})
 	public Set<User> getUsers() {
 		return users;
 	}
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Project other = (Project) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 

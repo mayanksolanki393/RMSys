@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import cyb.rms.enums.EnumProvider.Role;
+import cyb.rms.enums.RmsEnums.Role;
 @Entity
 //@table is nessary to create better tables
 @Table(name="USERS")
@@ -65,6 +67,7 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@Enumerated(EnumType.STRING)
 	@Column(name="ROLE",nullable=false)
 	public Role getRole() {
 		return role;
@@ -87,7 +90,7 @@ public class User implements Serializable {
 	public void setTechnology(String technology) {
 		this.technology = technology;
 	}
-	
+	//Join Table :USERS_PROJECTS TYPE manyTomany
 	 @ManyToMany(cascade=CascadeType.ALL)  
 	    @JoinTable(name="USER_PROJECT",  
 	    joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},  
@@ -99,7 +102,29 @@ public class User implements Serializable {
 		this.projects = projects;
 	}
 	
-	//Join Table :USERS_PROJECTS TYPE manyTomany
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+
 	
 	
 	

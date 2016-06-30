@@ -1,25 +1,44 @@
 package cyb.rms.entities;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import cyb.rms.enums.EnumProvider.Elaboration_Status;
-
-public class Elaboration {
+import cyb.rms.enums.RmsEnums.ElaborationStatus;
+@Entity
+@Table(name="ELABORATIONS")
+public class Elaboration implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4112167127514138700L;
 	private long id;
 	private String title;
 	private String elaboration;
 	private User elaborationBy;
 	private Date createdOn; 
 	private Date lastModifiedOn;
-	private Elaboration_Status status; 
-	//private Set<File> file//fk  	ELABORATION_FILE	OneToMany	FILE
+	private ElaborationStatus status; 
+	private Set<AppFile> file;//fk  	ELABORATION_FILE	OneToMany	FILE
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
 	public long getId()
 	{
@@ -40,7 +59,7 @@ public class Elaboration {
 		this.title = title;
 	}
 	
-	@Column(name="TITLE",length=255,nullable=false)
+	@Column(name="ELABORATION",length=255,nullable=false)
 	public String getElaboration() 
 	{
 		return elaboration;
@@ -81,15 +100,47 @@ public class Elaboration {
 	{
 		this.lastModifiedOn = lastModifiedOn;
 	}
-	
+	@Enumerated(EnumType.STRING)
 	@Column(name="STATUS",nullable=false)
-	public Elaboration_Status getStatus()
+	public ElaborationStatus getStatus()
 	{
 		return status;
 	}
-	public void setStatus(Elaboration_Status status)
+	public void setStatus(ElaborationStatus status)
 	{
 		this.status = status;
+	}
+	
+	@OneToMany(cascade=CascadeType.ALL)  
+    @JoinTable(name="ELABORATION_FILE",  
+    joinColumns={@JoinColumn(name="elaboration_id", referencedColumnName="id")},  
+    inverseJoinColumns={@JoinColumn(name="file_id", referencedColumnName="id")})  
+	public Set<AppFile> getFile() {
+		return file;
+	}
+	public void setFile(Set<AppFile> file) {
+		this.file = file;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Elaboration other = (Elaboration) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 	
 	

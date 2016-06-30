@@ -12,48 +12,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cyb.rms.entities.Employee;
-import cyb.rms.entities.Project;
+import cyb.rms.entities.*;
 import cyb.rms.exceptions.DaoException;
 import cyb.rms.services.IEmployeeService;
 
 @RestController
-@RequestMapping(path="/project")
-public class ProjectController {
-	
-	private static final Logger LOG = Logger.getLogger(Project.class);
+@RequestMapping(path="/elaboration")
+public class ElaborationController {
 	
 	@RequestMapping(method=RequestMethod.PUT)
-	public Project addProject(@RequestBody Project project)
+	public Elaboration addElaboration(@RequestBody Elaboration elaboration)
 	{
-		return project;
+		return elaboration;
 		
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, path="/projID")
-	public void removeProject(@PathVariable long projID)
+	@RequestMapping(method=RequestMethod.DELETE, path="elaboId")
+	public Elaboration removeElaboration(@PathVariable long elabId)
 	{
-		
+		return null;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public Project updateProject(@RequestBody Project project)
+	public Elaboration updateElaboration(@RequestBody Elaboration Elaboration)
 	{
-		return project;
-		
+		return Elaboration;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public Set<Project> getAllProjects()
+	@RequestMapping(method=RequestMethod.GET, path="/reqId")
+	public Set<Elaboration> getAllElaborationsByReqId(@PathVariable long projId)
 	{
 		return null;
 		
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, path="/projId")
-	public Project getProjectById(@PathVariable long projid)
+	@RequestMapping(method=RequestMethod.PUT, path="/elaboId")
+	public Elaboration getElaborationsById(@PathVariable long reqId)
 	{
 		return null;
+		
 	}
+	
 
 }
