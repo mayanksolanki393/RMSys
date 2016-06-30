@@ -24,10 +24,10 @@
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#/">Require Management System <sup
-				class="label label-danger">User</sup></a>
+				class="label label-danger">Admin</sup></a>
 		</div>
 		<ul class="nav navbar-nav navbar-right" style="margin-right:4px;">
-			<li><a href="#/">Welcome, [User name]</a></li>
+			<li><a href="#/">Welcome, [Admin name]</a></li>
 			<li><a href="#/">Logout</a></li>
 		</ul>
 	</nav>
@@ -36,7 +36,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="#/">Projects </a></li>
-					<li><a href="#/Mis">MIS Project</a></li>
+					<li><a href="#/users">Users</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"
@@ -65,11 +65,12 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="components/ie10-viewport-bug-workaround.js"></script>
 	<script src="common/modules/HttpExceptionHandeler.js"></script>
-	<script src="app/user/app.js"></script>
-	<script src="app/user/js/controllers/ProjectController.js"></script>
-	<script src="app/user/js/controllers/MisCtrl.js"></script>
-	<script src="app/user/js/controllers/NewRequirement.js"></script>
-	<script src="app/user/js/providers/EmployeeProvider.js"></script>
+	<script src="app/admin/app.js"></script>
+	<script src="app/admin/js/controllers/UserCtrl.js"></script>
+	<script src="app/admin/js/controllers/ProjectController.js"></script>
+	<script src="app/admin/js/controllers/NewUser.js"></script>
+	<script src="app/admin/js/controllers/NewProject.js"></script>
+	<script src="app/admin/js/providers/EmployeeProvider.js"></script>
 	
 </body>
 </html>

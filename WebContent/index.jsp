@@ -9,5 +9,6 @@
 <body>
 	<a href="empl">emp</a>
 	<a href="user">User</a>
+	<a href="admin">Admin</a>
 </body>
 </html>

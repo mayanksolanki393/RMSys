@@ -15,5 +15,11 @@ public class RedirectionController {
 	public String userPage(){
 		return "../app/user/index";
 	}
+	
+
+	@RequestMapping("/admin")
+	public String adminPage(){
+		return "../app/admin/index";
+	}
 
 }
