@@ -16,7 +16,7 @@
 
 <!-- Custom styles for this template -->
 <link href="components/dashboard.css" rel="stylesheet">
-<link href="app/emp-manager/css/MainStyle.css" rel="stylesheet">
+<link href="app/user/css/MainStyle.css" rel="stylesheet">
 </head>
 
 <body>
@@ -36,7 +36,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="#/">Projects </a></li>
-					<li><a href="#/newemployee">MIS Project</a></li>
+					<li><a href="#/Mis">MIS Project</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"
@@ -65,10 +65,10 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="components/ie10-viewport-bug-workaround.js"></script>
 	<script src="common/modules/HttpExceptionHandeler.js"></script>
-	<script src="app/emp-manager/app.js"></script>
-	<script src="app/emp-manager/js/controllers/EmployeeController.js"></script>
-	<script src="app/emp-manager/js/controllers/NewEmployeeController.js"></script>
-	<script src="app/emp-manager/js/providers/EmployeeProvider.js"></script>
+	<script src="app/user/app.js"></script>
+	<script src="app/user/js/controllers/ProjectController.js"></script>
+	<script src="app/user/js/controllers/MisCtrl.js"></script>
+	<script src="app/user/js/providers/EmployeeProvider.js"></script>
 	
 </body>
 </html>

@@ -1,9 +1,9 @@
-angular.module("empApp").controller("EmployeeController",["$scope","$filter","EmployeeService",function($scope,$filter,empService){
+angular.module("empApp").controller("ProjectController",["$scope","$filter","EmployeeService",function($scope,$filter,empService){
 	$scope.emps = [];
 	$scope.temp = {};
 	$scope.search = {
 		searchFor:"",	
-		searchBy:"id"
+		searchBy:"all"
 	};
 	
 	$scope.filter = {

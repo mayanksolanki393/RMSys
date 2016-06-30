@@ -1,4 +1,4 @@
-angular.module("empApp").controller("NewEmployeeCtrl",["$scope","$uibModal","EmployeeService",function($scope,$uibModal,empService){
+angular.module("empApp").controller("NewRequirementCtrl",["$scope","$uibModal","EmployeeService",function($scope,$uibModal,empService){
 	$scope.emp = {};
 	
 	$scope.add = function(){

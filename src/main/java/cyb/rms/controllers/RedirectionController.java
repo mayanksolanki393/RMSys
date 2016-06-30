@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RedirectionController {
 	
-	@RequestMapping("/admin")
-	public String adminPage(){
+	@RequestMapping("/empl")
+	public String empPage(){
 		return "../app/emp-manager/index";
 	}
+	
+	@RequestMapping("/user")
+	public String userPage(){
+		return "../app/user/index";
+	}
+
 }

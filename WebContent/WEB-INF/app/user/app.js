@@ -10,12 +10,16 @@ angular.module("empApp").config(['$routeProvider','$logProvider',function($route
 	
 	$routeProvider
 	.when('/',{
-		templateUrl : 'app/emp-manager/partials/employeelist.html',
-		controller : 'EmployeeController'
+		templateUrl : 'app/user/partials/ProjectList.html',
+		controller : 'ProjectController'
 	})
-	.when('/newemployee',{
-		templateUrl : 'app/emp-manager/partials/newemployee.html',
-		controller:'NewEmployeeCtrl'
+	.when('/Mis',{
+		templateUrl : 'app/user/partials/Mis.html',
+		controller:'MisCtrl'
+	})
+	.when('/addrequire',{
+		templateUrl : 'app/user/partials/Requirment.html',
+		controller:'NewRequirementCtrl'
 	})
 	.otherwise({
 		redirectTo : '/'

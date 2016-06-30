@@ -7,6 +7,7 @@
 <title>Login Page</title>
 </head>
 <body>
-	<a href="admin">admin</a>
+	<a href="empl">emp</a>
+	<a href="user">User</a>
 </body>
 </html>
