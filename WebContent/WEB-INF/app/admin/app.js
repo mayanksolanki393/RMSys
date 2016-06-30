@@ -18,11 +18,11 @@ angular.module("empApp").config(['$routeProvider','$logProvider',function($route
 		controller:'UserCtrl'
 	})
 	.when('/adduser',{
-		templateUrl : 'app/user/partials/adduser.html',
+		templateUrl : 'app/admin/partials/adduser.html',
 		controller:'NewUser'
 	})
 	.when('/addproject',{
-		templateUrl : 'app/user/partials/addproject.html',
+		templateUrl : 'app/admin/partials/addproject.html',
 		controller:'NewProject'
 	})
 	.otherwise({

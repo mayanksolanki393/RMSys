@@ -26,7 +26,7 @@
 			<a class="navbar-brand" href="#/">Resource Management System <sup
 				class="label label-danger">Admin</sup></a>
 		</div>
-		<ul class="nav navbar-nav navbar-right" style="margin-right:4px;">
+		<ul class="nav navbar-nav navbar-right" style="margin-right:4px;  ">
 			<li><a href="#/">Welcome, [Admin name]</a></li>
 			<li><a href="#/">Logout</a></li>
 		</ul>

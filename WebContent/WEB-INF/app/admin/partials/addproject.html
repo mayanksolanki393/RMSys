@@ -1,27 +1,28 @@
 <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}"
 	close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</uib-alert>
 <div class="panel panel-default theme-panel">
-	<div class="panel-heading">Add User Form</div>
+	<div class="panel-heading">Add Project Form</div>
 	<div class="panel-content">
 		<div style="padding: 15px">
 			<form class="form">
 				<div class="form-group">
-					<label for="username">User Name</label> <input
+					<label for="title">Title</label> <input
 						type="text" class="form-control" id="username"
-						placeholder="Enter Username" data-ng-model="emp.firstName" />
-				</div>
-				<div class="form-group">
-					<label for="description">Password</label> <input
-						type="password" class="form-control" id="password"
-						placeholder="Password" data-ng-model="emp.lastName" />
+						placeholder="Enter Title" data-ng-model="emp.firstName" />
 				</div>
 				
+				<div class="form-group">
+					<label for="description">Description</label> <input
+						type="text" class="form-control" id="username"
+						placeholder="Enter Description" data-ng-model="emp.firstName" />
+				</div>
 				
 				<div class="form-group">
-					<label for="type">Email</label> <input
-						type="text" class="form-control" id="email"
-						placeholder="Enter email" data-ng-model="emp.salary" />
+					<label for="stitle">Short Title</label> <input
+						type="text" class="form-control" id="username"
+						placeholder="Enter Short Title" data-ng-model="emp.firstName" />
 				</div>
+				
 				
 			</form>
 		</div>
