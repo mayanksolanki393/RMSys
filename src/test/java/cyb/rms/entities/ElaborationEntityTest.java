@@ -1,4 +1,4 @@
-package cyb.rms.daos.test;
+package cyb.rms.entities;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -35,7 +35,7 @@ public class ElaborationEntityTest {
 	@Test
 	@Rollback(value=true)
 	public void saveTest() throws Exception{
-		User user = new User("mayank393","pass", "mayankso@cybage.com", Role.ADMIN, "RMS Administrator", "Java", null);
+		User user = new User("mayank393","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
 		AppFile file1 = new AppFile("FileName.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE);
 		AppFile file2 = new AppFile("FileName2.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE);
 		

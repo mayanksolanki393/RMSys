@@ -151,8 +151,8 @@ public class Requirement implements Serializable{
 	
 	@ManyToMany(cascade=CascadeType.ALL)  
     @JoinTable(name="REQUIREMENT_CREATOR",  
-    joinColumns={@JoinColumn(name="requirement_id", referencedColumnName="id")},  
-    inverseJoinColumns={@JoinColumn(name="creator_id", referencedColumnName="id")})  
+    joinColumns={@JoinColumn(name="REQUIREMENTID")},  
+    inverseJoinColumns={@JoinColumn(name="CREATORID")})  
 	public List<User> getCreators() {
 		return creators;
 	}
@@ -171,7 +171,7 @@ public class Requirement implements Serializable{
 		this.contributors = contributor;
 	}
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATEDON",nullable=false)
 	public Date getCreatedOn() {
 		return createdOn;
@@ -180,7 +180,7 @@ public class Requirement implements Serializable{
 		this.createdOn = createdOn;
 	}
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="LASTMODIFIEDON",nullable=false)
 	public Date getLastModifiedOn() {
 		return lastModifiedOn;

@@ -1,4 +1,4 @@
-package cyb.rms.daos.test;
+package cyb.rms.entities;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -44,13 +44,13 @@ public class RequirementEntityTest {
 	@Test
 	@Rollback(value=true)
 	public void saveTest() throws Exception{
-		User creator = new User("mayank393","pass", "mayankso@cybage.com", Role.ADMIN, "RMS Administrator", "Java", null);
+		User creator = new User("mayank393","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
 		
 		List<User> creators = new LinkedList<User>();
 		creators.add(creator);
 		
-		User user1 = new User("ajinkyakhar","pass", "ajinkyakhar@cybage.com", Role.USER, "Sr. Software Developer", "Java", null);
-		User user2 = new User("saurabhpa","pass", "saurabhpa@cybage.com", Role.USER, "Sr. Software Developer", "Java", null);
+		User user1 = new User("ajinkyakhar","pass", "ajinkyakhar@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
+		User user2 = new User("saurabhpa","pass", "saurabhpa@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
 		List<User> users = new LinkedList<User>();
 		
 		users.add(user1);

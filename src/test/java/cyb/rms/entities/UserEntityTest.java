@@ -1,6 +1,4 @@
-package cyb.rms.daos.test;
-
-import java.util.Date;
+package cyb.rms.entities;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,26 +10,22 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import cyb.rms.daos.IGenericDao;
-import cyb.rms.entities.AppFile;
 import cyb.rms.entities.User;
-import cyb.rms.enums.RmsEnums.FileStatus;
-import cyb.rms.enums.RmsEnums.FileType;
 import cyb.rms.enums.RmsEnums.Role;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
 @Transactional
-public class AppFileEntityTest {
+public class UserEntityTest {
 
 	@Autowired
-	@Qualifier("fileGenericDao")
-	IGenericDao<AppFile, Long> fileGenericDao;
+	@Qualifier("userGenericDao")
+	IGenericDao<User, Long> userGenericDao;
 	
 	@Test
-	@Rollback(value=true)
+	@Rollback(value=false)
 	public void saveTest() throws Exception{
-		User user = new User("mayank393","pass", "mayankso@cybage.com", Role.ADMIN, "RMS Administrator", "Java", null);
-		AppFile file = new AppFile("FileName.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE);	
-		fileGenericDao.save(file);
+		User user = new User("mayank393","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
+		userGenericDao.save(user);
 	}
 }

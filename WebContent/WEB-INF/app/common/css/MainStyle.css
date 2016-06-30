@@ -1,0 +1,16 @@
+body{
+	background-color: #5194ca;
+}
+
+.login-box{
+	display:block;
+	width : 450px;
+	padding: 50px;
+}
+
+.center{
+	postion:absolute;
+	margin-top:30%;
+	margin-left:50%;
+ 	transform: translate(-50%, -50%) 
+}

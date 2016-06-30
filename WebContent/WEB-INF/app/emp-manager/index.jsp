@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%><!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="en" data-ng-app="empApp">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,8 +28,8 @@
 				class="label label-danger">Admin</sup></a>
 		</div>
 		<ul class="nav navbar-nav navbar-right" style="margin-right:4px;">
-			<li><a href="#/">Welcome, [Admin name]</a></li>
-			<li><a href="#/">Logout</a></li>
+			<li><a href="#/">Welcome, <span data-user-name></span></a></li>
+			<li><a href="<c:url value="/logout" />">Logout</a></li>
 		</ul>
 	</nav>
 	<div class="container-fluid">
@@ -40,6 +41,7 @@
 				</ul>
 			</div>
 		<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" data-ng-view></div> -->
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div data-ng-controller="FilesController">
 				<ul>
 					<li data-ng-repeat="file in files">
@@ -47,8 +49,9 @@
 					</li>
 				</ul>
 				<div class="form-inline">
-					<div data-file-upload></div>
+					<input type="file" file-model="myFile"> <button class="btn btn-primary" ng-click="uploadFile()">Upload</button> 
 				</div>
+			</div>
 			</div>
 			
 		</div>
@@ -80,8 +83,12 @@
 	<script src="app/emp-manager/js/controllers/NewEmployeeController.js"></script>
 	<script src="app/emp-manager/js/providers/EmployeeProvider.js"></script>
 	<script src="app/common/directives/rmsDirectives.js"></script>
-	<script src="app/common/directives/fileupload/fileuploadattribute.js"></script>
+	<script src="app/common/directives/fileuploadattribute.js"></script>
+	<script src="app/common/services/rmsServices.js"></script>
+	<script src="app/common/services/fileUploadService.js"></script>
+	<script src="app/common/directives/userNameDirective.js"></script>
 	<script src="app/emp-manager/js/controllers/FilesController.js"></script>
+
 	
 </body>
 </html>

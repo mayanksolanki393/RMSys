@@ -35,7 +35,9 @@ public class EmployeeDao implements IEmployeeDao {
 	public Employee removeEmployee(Employee emp) throws DaoException {
 		//if you write more than this one line please write a test case to test it
 		emp = empGenereicDao.get(emp.getId());
-		return empGenereicDao.remove(emp);
+		emp.setFirstName("DELETED");
+		
+		return empGenereicDao.update(emp);
 	}
 
 	@Override

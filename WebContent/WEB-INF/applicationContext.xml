@@ -20,6 +20,7 @@
       </bean>
       
 	<context:component-scan base-package="cyb.rms"></context:component-scan>
-	<import resource="spring-orm-config.xml"/>
 	<context:annotation-config></context:annotation-config>
+	<import resource="spring-orm-config.xml"/>
+	<import resource="spring-security-config.xml"/>
 </beans>

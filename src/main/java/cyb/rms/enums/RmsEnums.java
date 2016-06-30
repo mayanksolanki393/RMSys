@@ -7,9 +7,9 @@ public class RmsEnums {
 	public enum Role
 	{
 
-		@JsonProperty("ADMIN")ADMIN,
-		@JsonProperty("MANAGER")MANAGER,
-		@JsonProperty("USER")USER;
+		@JsonProperty("ROLE_ADMIN")ROLE_ADMIN,
+		@JsonProperty("ROLE_MANAGER")ROLE_MANAGER,
+		@JsonProperty("ROLE_USER")ROLE_USER;
 	}
 	
 	public enum ProjectStatus
