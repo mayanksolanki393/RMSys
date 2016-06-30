@@ -25,7 +25,7 @@ public interface IProjectDao {
 	public List<Project> listProjects() throws DaoException;
 
 	@Transactional(readOnly=true)
-	public Project getProject(long prjId) throws DaoException;
+	public Project getProjectById(long prjId) throws DaoException;
 
 	@Transactional
 	public List<Project> getProjectsByTitle(String prjTitle) throws DaoException;

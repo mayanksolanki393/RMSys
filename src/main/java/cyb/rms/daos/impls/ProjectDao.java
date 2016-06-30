@@ -46,7 +46,7 @@ public class ProjectDao implements IProjectDao {
 	}
 
 	@Override
-	public Project getProject(long prjId) throws DaoException {
+	public Project getProjectById(long prjId) throws DaoException {
 		
 		return projectGenericDao.get(prjId);
 	}
