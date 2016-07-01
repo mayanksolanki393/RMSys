@@ -1,5 +1,7 @@
 package cyb.rms.daos.test;
 
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +25,11 @@ public class UserDaoTest {
 	@Test
 	@Rollback(value=true)
 	public void saveTest() throws Exception{
-		User user = new User("mayank393","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
+		String username = "mayank393"+new Date();
+		User user = new User(username,"pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
 		userDao.saveUser(user);
 		
-		User user2 = userDao.getUserByUsername("mayank393");
+		User user2 = userDao.getUserByUsername(username);
 		Assert.assertEquals(user.getEmail(),user2.getEmail());
 		Assert.assertEquals(user.getPassword(),user2.getPassword());
 		Assert.assertEquals(user.getTechnology(),user2.getTechnology());

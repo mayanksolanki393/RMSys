@@ -21,7 +21,7 @@ public class UserGenerator {
 	IUserDao userDao;
 	
 	@Test
-	@Rollback(value=false)
+	@Rollback(value=true)
 	public void saveTest() throws Exception{
 		User user = userDao.getUserByUsername("mayank393");
 		if(user==null){
