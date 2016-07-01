@@ -1,0 +1,39 @@
+<div class="panel panel-default theme-panel">
+	<div class="panel-heading">Update Project Form</div>
+	<div class="panel-content">
+		<div style="padding: 15px">
+			<form class="form" data-ng-submit=openConfirm() >
+				<div class="form-group">
+					<label for="titleField">Enter New Title</label> 
+					<input type="text" class="form-control" id="titleField"
+						placeholder="Enter New Project Title" data-ng-model="addProject.title" required autofocus/>
+				</div>
+				<div class="form-group">
+					<label for="descriptionField">Enter New Description</label> <input
+						type="text" class="form-control" id="descriptionField"
+						placeholder="Enter New Description" data-ng-model="addProject.description" required />
+				</div>
+				<div class="form-group">
+					<label for="shortTitleField">Enter New Short Title</label> 
+					<input type="text" class="form-control" id="shortTitleField"
+						 placeholder="Enter New Short Title"
+						data-ng-model="addProject.shortTitle" required />
+				</div>
+				<div>
+				<label for="statusField">Choose New Status</label>
+					<select class="form-control" data-ng-model="addProject.status" required>
+							<option value="none">NONE</option>
+							<option value="active">ACTIVE</option>
+							<option value="completed">COMPLETED</option>
+							<option value="deleted">DELETED</option>
+						</select>
+				</div>
+				<br>
+				<div class="form-group">
+				<input type="Submit" class="btn btn-primary" value="Update"> 
+					<input type="reset" class="btn btn-default" value="Clear">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

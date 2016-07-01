@@ -26,11 +26,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.enums.RmsEnums;
 import cyb.rms.enums.RmsEnums.Constraints;
 import cyb.rms.enums.RmsEnums.Priority;
 import cyb.rms.enums.RmsEnums.RequirementStatus;
 import cyb.rms.enums.RmsEnums.Type;
+import cyb.rms.rest.view.RequirementView;
 
 @Entity
 @Table(name="REQUIREMENTS")
@@ -39,22 +42,55 @@ public class Requirement implements Serializable{
 	private static final long serialVersionUID = -8613161674360685751L;
 	
 	//state members
+	@JsonView(RequirementView.Minimal.class)
 	private long id;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private String title;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private String description;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private String shortTitle;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private List<User> creators;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	List<User> contributors;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Date createdOn;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Date lastModifiedOn;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Type type;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	Set<Constraints> constraints;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	Set<String> links;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	List<Elaboration> elaborations;	
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	Requirement parent;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Priority priority;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private RequirementStatus status;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private List<AppFile> files;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private Project	project;
 	
 	public Requirement(){

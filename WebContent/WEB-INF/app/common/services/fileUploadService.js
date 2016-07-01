@@ -1,4 +1,4 @@
-angular.module("rms.services").service('fileUpload', ['$http','$q', function ($http,$q) {
+angular.module("rms.httpService").service('fileUpload', ['$http','$q', function ($http,$q) {
 	var deferred = $q.defer();
     this.uploadFileToUrl = function(file, uploadUrl){
         var fd = new FormData();

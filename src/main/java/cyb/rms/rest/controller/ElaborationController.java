@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cyb.rms.entities.Elaboration;
 import cyb.rms.exceptions.DaoException;
 import cyb.rms.services.IElaborationService;
-import cyb.rms.services.impls.RequirementService;
+import cyb.rms.services.IRequirementService;
 
 @RestController
 @RequestMapping(path = "/elaboration")
@@ -24,7 +24,7 @@ public class ElaborationController {
 	IElaborationService elaboService;
 
 	@Autowired
-	RequirementService requiService;
+	IRequirementService requiService;
 	
 	@RequestMapping(method = RequestMethod.PUT)
 	public Elaboration addElaboration(@RequestBody Elaboration elaboration) throws DaoException {

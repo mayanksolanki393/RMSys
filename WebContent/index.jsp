@@ -37,8 +37,7 @@
 					autocomplete="off" required>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary">Submit</button>
-				<button type="reset" class="btn btn-default">Clear</button>
+				<button type="submit" class="btn btn-primary form-control">Submit</button>
 			</div>
 		</form>
 	</div>

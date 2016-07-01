@@ -1,5 +1,7 @@
 package cyb.rm.utils;
 
+import javax.persistence.NoResultException;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,13 +23,13 @@ public class UserGenerator {
 	IUserDao userDao;
 	
 	@Test
-	@Rollback(value=true)
+	@Rollback(value=false)
 	public void saveTest() throws Exception{
-		User user = userDao.getUserByUsername("mayank393");
-		if(user==null){
-			user = new User("mayankso","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
+	
+		
+			User user = new User("admin","pass", "admin@cybage.com", Role.ROLE_USER, "RMS Administrator", "Java", null);
 			userDao.saveUser(user);
-		}
+	
 		/*User user2 = userDao.getUserByUsername("mayank393");
 		Assert.assertEquals(user.getEmail(),user2.getEmail());
 		Assert.assertEquals(user.getPassword(),user2.getPassword());

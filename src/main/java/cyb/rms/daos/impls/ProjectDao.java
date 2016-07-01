@@ -41,7 +41,6 @@ public class ProjectDao implements IProjectDao {
 
 	@Override
 	public List<Project> listProjects() throws DaoException {
-		
 		return projectGenericDao.list();
 	}
 

@@ -1,24 +1,25 @@
 package cyb.rms.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.enums.RmsEnums.Role;
+import cyb.rms.rest.view.UserView;
 
 @Entity
 @Table(name="USERS")
@@ -27,22 +28,35 @@ public class User implements Serializable {
 	private static final long serialVersionUID = -1855984087920682493L;
 	
 	//state members
+	@JsonView(UserView.Minimal.class)
 	private long id;
-	private String username;	
-	private String password;
-	private String email;
-	private Role role;	
-	private String designation;	
-	private String technology;
-	private Set<Project> projects;
-
 	
+	@JsonView(UserView.Minimal.class)
+	private String username;	
+	
+	private String password;
+	
+	@JsonView(UserView.WithoutProject.class)
+	private String email;
+	
+	@JsonView(UserView.Minimal.class)
+	private Role role;	
+	
+	@JsonView(UserView.WithoutProject.class)
+	private String designation;	
+	
+	@JsonView(UserView.WithoutProject.class)
+	private String technology;
+	
+	@JsonView(UserView.Detailed.class)
+	private List<Project> projects;
+
 	//constructors
 	public User(){
 		initNulls();
 	}
 	
-	public User(String username, String password, String email, Role role,String designation, String technology, Set<Project> projects) {
+	public User(String username, String password, String email, Role role,String designation, String technology, List<Project> projects) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -54,7 +68,7 @@ public class User implements Serializable {
 		initNulls();
 	}
 
-	public User(long id, String username, String password, String email,Role role, String designation, String technology,Set<Project> projects) {
+	public User(long id, String username, String password, String email,Role role, String designation, String technology,List<Project> projects) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -127,17 +141,17 @@ public class User implements Serializable {
 		this.technology = technology;
 	}
 	
-	@ManyToMany(mappedBy="users")
-	public Set<Project> getProjects() {
+	@ManyToMany(mappedBy="users",fetch=FetchType.EAGER)
+	public List<Project> getProjects() {
 		return projects;
 	}
-	public void setProjects(Set<Project> projects) {
+	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
 	
 	public void initNulls(){
 		if(projects == null){
-			this.projects = new HashSet<Project>();
+			this.projects = new LinkedList<>();
 		}
 	}
 	

@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.entities.User;
 import cyb.rms.exceptions.DaoException;
+import cyb.rms.rest.view.UserView;
 import cyb.rms.services.IUserSevrice;
 
 @RestController
 @RequestMapping(path="/user")
-@Transactional
 public class UserController {
 	
 	private static final Logger LOG = Logger.getLogger(EmployeeController.class);
@@ -35,11 +37,13 @@ public class UserController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT)
+	@JsonView(UserView.Detailed.class)
 	public User addUser(@RequestBody User user) throws DaoException
 	{
 		return userService.addUser(user);
 	}
 	
+	@JsonView(UserView.Detailed.class)
 	@RequestMapping(method=RequestMethod.DELETE, path="/{userId}")
 	public User removeUser(@PathVariable("userId") long userId) throws DaoException
 	{
@@ -47,12 +51,14 @@ public class UserController {
 		return userService.removeUser(user);
 	}
 	
+	@JsonView(UserView.Detailed.class)
 	@RequestMapping(method=RequestMethod.POST)
 	public User updateUser(@RequestBody User user) throws DaoException
 	{
 		return userService.updateUser(user);
 	}
 	
+	@JsonView(UserView.Minimal.class)
 	@RequestMapping(method=RequestMethod.GET)
 	public List<User> getAllUsers() throws DaoException
 	{
@@ -60,15 +66,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/{userId}")
+	@JsonView(UserView.Detailed.class)
+	
 	public User getUserById(@PathVariable("userId") long userId) throws DaoException
 	{
 		return userService.findUserById(userId);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/check/{username}")
+	@JsonView(UserView.Minimal.class)
 	public User getUserByUsername(@PathVariable("username") String userName) throws DaoException
 	{
 		return userService.findUsersByUsername(userName);
 	}
-
 }

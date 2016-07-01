@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.entities.Project;
 import cyb.rms.entities.Requirement;
 import cyb.rms.exceptions.DaoException;
+import cyb.rms.rest.view.RequirementView;
 import cyb.rms.services.IProjectService;
 import cyb.rms.services.IRequirementService;
 
@@ -46,7 +49,15 @@ public class RequirementController {
 		return reqServ.updateRequirement(requirement);
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, path="/{projId}") 
+	@RequestMapping(method=RequestMethod.GET, path="/{reqId}")
+	@JsonView(RequirementView.Detailed.class)
+	public Requirement getAllRequirementByReqId(@PathVariable("reqId") long reqId) throws DaoException
+	{
+		return reqServ.findRequirementById(reqId);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, path="/proj/{projId}")
+	@JsonView(RequirementView.Minimal.class)
 	public List<Requirement> getAllRequirementsByProjId(@PathVariable("projId") long projId) throws DaoException
 	{
 		Project project = projServ.findProjectById(projId);

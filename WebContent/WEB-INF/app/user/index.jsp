@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%><!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html lang="en" data-ng-app="empApp">
+<html lang="en" data-ng-app="userApp">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,38 +10,37 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Employee Manager</title>
+<title>Requirement Management System</title>
 
 <!-- Bootstrap core CSS -->
 <link href="components/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="components/dashboard.css" rel="stylesheet">
-<link href="app/emp-manager/css/MainStyle.css" rel="stylesheet">
+<link href="app/user/css/MainStyle.css" rel="stylesheet">
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<nav class="navbar navbar-default navbar-fixed-top themify" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#/">Resource Management System <sup
-				class="label label-danger">Admin</sup></a>
+			<a class="navbar-brand"  href="#/" ><span class="brand">Requirement Management System</span></a>
 		</div>
 		<ul class="nav navbar-nav navbar-right" style="margin-right:4px;">
-			<li><a href="#/">Welcome, <span data-user-name></span></a></li>
-			<li><a href="<c:url value="/logout" />">Logout</a></li>
+			<li><a href="#/"><span class="brand">Welcome, <span data-user-name></span></span></a></li>
+			<li><a href="<c:url value="/logout" />"><span class="brand">Logout</span></a></li>
 		</ul>
 	</nav>
-	<div class="container-fluid">
+	<div class="container-fluid mainPanel">
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="#/">Employees </a></li>
-					<li><a href="#/newemployee">Add New Employee</a></li>
+					<li><a href="#/" class="themify">My Projects</a></li>
+					<li><a href="#/newemployee" class="themify">Add New Employee</a></li>
 				</ul>
 			</div>
-		<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" data-ng-view></div> -->
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" data-ng-view></div>
+			<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div data-ng-controller="FilesController">
 				<ul>
 					<li data-ng-repeat="file in files">
@@ -52,7 +51,7 @@
 					<input type="file" file-model="myFile"> <button class="btn btn-primary" ng-click="uploadFile()">Upload</button> 
 				</div>
 			</div>
-			</div>
+			</div> -->
 			
 		</div>
 	</div>
@@ -77,18 +76,35 @@
 	<script src="components/holder.min.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="components/ie10-viewport-bug-workaround.js"></script>
-	<script src="app/emp-manager/app.js"></script>
-	<script src="app/common/modules/HttpExceptionHandeler.js"></script>
-	<script src="app/emp-manager/js/controllers/EmployeeController.js"></script>
-	<script src="app/emp-manager/js/controllers/NewEmployeeController.js"></script>
-	<script src="app/emp-manager/js/providers/EmployeeProvider.js"></script>
-	<script src="app/common/directives/rmsDirectives.js"></script>
+	
+	<!-- loading providers -->
+	<script src="app/common/services/HttpService.js"></script>
+	<script src="app/common/services/providers/BaseUrlService.js"></script>
+	<script src="app/common/services/providers/ProjectProvider.js"></script>
+	<script src="app/common/services/providers/RequirementProvider.js"></script>
+	<!--<script src="app/common/services/providers/ElaborationProvider.js"></script> -->
+	
+	<script src="app/user/app.js"></script>
+
+<!-- <script src="app/common/modules/HttpExceptionHandeler.js"></script>
+	<script src="app/user/js/controllers/EmployeeController.js"></script>
+	<script src="app/user/js/controllers/NewEmployeeController.js"></script>
+	<script src="app/user/js/providers/EmployeeProvider.js"></script>
+	
 	<script src="app/common/directives/fileuploadattribute.js"></script>
 	<script src="app/common/services/rmsServices.js"></script>
 	<script src="app/common/services/fileUploadService.js"></script>
-	<script src="app/common/directives/userNameDirective.js"></script>
-	<script src="app/emp-manager/js/controllers/FilesController.js"></script>
-
 	
+	<script src="app/user/js/controllers/FilesController.js"></script> -->
+	
+	<!-- loading controllers -->
+	<script src="app/user/js/controllers/ProjectListController.js"></script>
+	<script src="app/user/js/controllers/ProjectDetailsController.js"></script>
+	<script src="app/user/js/controllers/RequirementDetailsController.js"></script>
+	
+	<!-- loading directives -->
+	<script src="app/common/directives/rmsDirectives.js"></script>
+	<script src="app/common/directives/userNameDirective.js"></script>
+
 </body>
 </html>

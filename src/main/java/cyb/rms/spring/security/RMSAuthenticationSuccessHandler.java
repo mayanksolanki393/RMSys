@@ -25,7 +25,7 @@ public class RMSAuthenticationSuccessHandler implements AuthenticationSuccessHan
 			response.sendRedirect("admin");
 		}
 		else{
-			response.sendRedirect("user");
+			response.sendRedirect("app");
 		}
 		
 	}

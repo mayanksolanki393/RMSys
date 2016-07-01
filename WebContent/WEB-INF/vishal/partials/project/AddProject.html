@@ -1,0 +1,78 @@
+<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}"
+	close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</uib-alert>
+<div class="panel panel-default theme-panel">
+	<div class="panel-heading">Add Project Form</div>
+	<div class="panel-content">
+		<div style="padding: 15px">
+			<form class="form" data-ng-submit=openConfirm() >
+				<div class="form-group">
+					<label for="titleField">Enter Project Title</label> 
+					<input type="text" class="form-control" id="titleField"
+						placeholder="Enter Project Title" data-ng-model="addProject.title" required autofocus/>
+				</div>
+				<div class="form-group">
+					<label for="descriptionField">Enter Description</label> <input
+						type="text" class="form-control" id="descriptionField"
+						placeholder="Enter Description" data-ng-model="addProject.description" required />
+				</div>
+				<div class="form-group">
+					<label for="shortTitleField">Enter Short Title</label> 
+					<input type="text" class="form-control" id="shortTitleField"
+						 placeholder="Enter Short Title"
+						data-ng-model="addProject.shortTitle" required />
+				</div>
+				<div>
+				<label for="statusField">Choose Status</label>
+					<select class="form-control" data-ng-model="addProject.status" required>
+							<option value="none">NONE</option>
+							<option value="active">ACTIVE</option>
+							<option value="completed">COMPLETED</option>
+							<option value="deleted">DELETED</option>
+						</select>
+				</div>
+				<br>
+				<div class="form-group">
+				<input type="Submit" class="btn btn-primary" value="Add"> 
+					<input type="reset" class="btn btn-default" value="Clear">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="newProjectConfirmationModal.html">
+ 	   <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="dismissConfirm()">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+           
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <h5>Do you want to add a new project with the following details?</h5>
+                <table class="table table-bordered">
+                	<tr>
+                		<td>Project Title</td>
+                		<td>{{addProject.title}}</td>
+                	</tr>
+                	<tr>
+                		<td>Description</td>
+                		<td>{{addProject.description}}</td>
+                	</tr>
+                	<tr>
+                		<td>Short Title</td>
+                		<td>{{addProject.shortTitle}}</td>
+                	</tr> 
+                	<tr>
+                		<td>Status</td>
+                		<td>{{addProject.status}}</td>
+                	</tr>
+                </table>
+            </div>
+           
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-ng-click="add()">yes</button>
+                <button type="button" class="btn btn-default" ng-click="dismissConfirm()">No! Wait</button>
+            </div>
+</script>

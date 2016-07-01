@@ -7,9 +7,9 @@ public class RmsEnums {
 	public enum Role
 	{
 
-		@JsonProperty("ROLE_ADMIN")ROLE_ADMIN,
-		@JsonProperty("ROLE_MANAGER")ROLE_MANAGER,
-		@JsonProperty("ROLE_USER")ROLE_USER;
+		@JsonProperty("ADMIN")ROLE_ADMIN,
+		@JsonProperty("MANAGER")ROLE_MANAGER,
+		@JsonProperty("USER")ROLE_USER;
 	}
 	
 	public enum ProjectStatus
@@ -39,11 +39,11 @@ public class RmsEnums {
 	
 	public enum Type
 	{
-		@JsonProperty("NEW_FEATURE")NEW_FEATURE,
+		@JsonProperty("NEW FEATURE")NEW_FEATURE,
 		@JsonProperty("ENHANCEMENT")ENHANCEMENT,
-		@JsonProperty("BUG_ISSUE")BUG_ISSUE,
+		@JsonProperty("BUG ISSUE")BUG_ISSUE,
 		@JsonProperty("TASK")TASK,
-		@JsonProperty("CUST_REQ")CUST_REQ,
+		@JsonProperty("CUSTOMER REQ")CUST_REQ,
 		@JsonProperty("UNKNOWN")UNKNOWN;
 
 	}
@@ -88,9 +88,9 @@ public class RmsEnums {
 		@JsonProperty("OPEN")OPEN,
 		@JsonProperty("ASSIGNED")ASSIGNED,
 		@JsonProperty("IMPLEMENTATION")IMPLEMENTATION,
-		@JsonProperty("DEV_TESTING")DEV_TESTING,
+		@JsonProperty("DEVELOPER TESTING")DEV_TESTING,
 		@JsonProperty("SUSPENDED")SUSPENDED,
-		@JsonProperty("QA_TESTING")QA_TESTING,
+		@JsonProperty("QA TESTING")QA_TESTING,
 		@JsonProperty("REOPEN")REOPEN,
 		@JsonProperty("CLOSED")CLOSED,
 		@JsonProperty("DELETED")DELETED;

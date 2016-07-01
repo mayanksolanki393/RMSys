@@ -49,3 +49,14 @@ th{
 	color:#9d9d9d;
 		
 }
+
+th {
+  font-family: "Trebuchet MS", Arial, Verdana;
+  font-size: 12px;
+  padding: 3px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #CDC1A7;
+  background-color: #CDC1A7;
+  color: #993300;
+}
