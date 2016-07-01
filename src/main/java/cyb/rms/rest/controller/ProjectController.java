@@ -1,59 +1,73 @@
 package cyb.rms.rest.controller;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cyb.rms.entities.Employee;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.entities.Project;
+import cyb.rms.entities.User;
 import cyb.rms.exceptions.DaoException;
-import cyb.rms.services.IEmployeeService;
+import cyb.rms.rest.view.ProjectView;
+import cyb.rms.rest.view.UserView;
+import cyb.rms.services.IProjectService;
+import cyb.rms.services.IUserSevrice;
 
 @RestController
 @RequestMapping(path="/project")
+@Transactional
 public class ProjectController {
-	
 	private static final Logger LOG = Logger.getLogger(Project.class);
 	
+	@Autowired
+	IProjectService projService;
+	
+	@Autowired
+	IUserSevrice userService;
+	
 	@RequestMapping(method=RequestMethod.PUT)
-	public Project addProject(@RequestBody Project project)
+	public Project addProject(@RequestBody Project project) throws DaoException
 	{
-		return project;
-		
+		return projService.addProject(project);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, path="/projID")
-	public void removeProject(@PathVariable long projID)
+	@RequestMapping(method=RequestMethod.DELETE, path="/{projId}") 
+	public Project removeProject(@PathVariable("projId") long projId) throws DaoException
 	{
-		
+		Project proj = projService.findProjectById(projId);
+		return projService.removeProject(proj);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public Project updateProject(@RequestBody Project project)
+	public Project updateProject(@RequestBody Project project) throws DaoException
 	{
-		return project;
-		
+		return projService.updateProject(project);
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public Set<Project> getAllProjects()
+	/*@RequestMapping(method=RequestMethod.GET)
+	@JsonView(ProjectView.List.class)
+	public List<Project> getAllProjects(Principal principal) throws DaoException
 	{
-		return null;
-		
-	}
+		if(principal != null){
+			User u = userService.findUsersByUsername(principal.getName());
+			return u.getProjects();
+		}
+		throw new RuntimeException("user not found");
+	}*/
 	
-	@RequestMapping(method=RequestMethod.GET, path="/projId")
-	public Project getProjectById(@PathVariable long projid)
+	@RequestMapping(method=RequestMethod.GET, path="/{projId}")
+	public Project getProjectById(@PathVariable("projId") long projId) throws DaoException
 	{
-		return null;
+		return projService.findProjectById(projId);
 	}
 
 }

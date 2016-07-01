@@ -5,9 +5,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class RedirectionController {
-	
-	@RequestMapping("/admin")
+
+	@RequestMapping(path="/admin")
 	public String adminPage(){
-		return "../app/emp-manager/index";
+		return "app/admin/index";
+	}
+	
+	@RequestMapping(path="/app")
+	public String userPage(){
+		return "app/user/index";
 	}
 }
