@@ -2,19 +2,26 @@ package cyb.rms.controllers;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,15 +43,12 @@ import cyb.rms.services.IRequirementService;
 import cyb.rms.services.IUserService;
 
 @RestController()
-@RequestMapping("/upload/file")
-public class FileUploadController {
+@RequestMapping("/download/file")
+public class FileDownloadController {
 	@Value("${upload.location}")
 	private static String location = "D:\\rms";
 
-	private static Logger LOG = Logger.getLogger(FileUploadController.class);
-
-	@Autowired
-	IRequirementService reqService;
+	private static Logger LOG = Logger.getLogger(FileDownloadController.class);
 	
 	@Autowired
 	IUserService userService;
@@ -52,32 +56,24 @@ public class FileUploadController {
 	@Autowired
 	IAppFileService appFileService;
 
-	@RequestMapping(value = "/requirement", method = RequestMethod.POST, consumes = { "multipart/form-data" }, produces = "plain/text")
-	public @ResponseBody ResponseEntity<String> uploadFile(
-			@RequestParam("file") MultipartFile file,
-			@RequestParam("reqId") int reqId,
-			Authentication authentication) throws DaoException, IOException {
+	@RequestMapping(method = RequestMethod.GET,path="/{fileId}")
+	public void downloadFile(@PathVariable("fileId") int fileId,Authentication authentication,HttpServletResponse response) throws DaoException, IOException {
 
-		Requirement requirement = reqService.findRequirementById(reqId);
-		User user = userService.findUsersByUsername(authentication.getName());
-				
-		AppFile appFile = new AppFile(file.getOriginalFilename(), new Date(), FileStatus.ACTIVE, user, FileType.REQUIREMENT_FILE,requirement.getProject());
-		appFileService.addAppFile(appFile);
-		LOG.info("File id : "+appFile.getId());
-		File uploadDirectory = new File(location + File.separator+ requirement.getProject().getTitle());
-		
-		if(!uploadDirectory.exists()){
-			uploadDirectory.mkdir();
+		AppFile appFile = appFileService.findAppFileById(fileId);
+		User requester = userService.findUsersByUsername(authentication.getName());
+		if(appFile.getProject().getUsers().contains(requester)){
+			File file = new File(location+File.separator+appFile.getProject().getTitle()+File.separator+appFile.getId()+"_"+appFile.getFilename());
+			if(!file.exists()){
+				throw new FileNotFoundException();
+			}
+			else{
+				FileInputStream inputStream = new FileInputStream(file);
+				response.setHeader("Content-Disposition", "attachement;filename= \""+appFile.getFilename()+"\"");
+				IOUtils.copy( inputStream , response.getOutputStream());
 		}
-		
-		File uploadFile = new File(uploadDirectory.getAbsolutePath()+ File.separator + appFile.getId()+"_"+file.getOriginalFilename());
-		byte[] bytes = file.getBytes();
-		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadFile));
-		stream.write(bytes);
-		stream.close();
-
-		requirement.getFiles().add(appFile);
-		reqService.updateRequirement(requirement);
-		return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully");
+		}
+		else{
+			throw new AccessDeniedException("You dont have enough access for this file");
+		}
 	}
 }

@@ -16,8 +16,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.enums.RmsEnums.FileType;
 import cyb.rms.enums.RmsEnums.FileStatus;
+import cyb.rms.rest.view.FileView;
 
 @Entity
 @Table(name="FILES")
@@ -26,26 +30,43 @@ public class AppFile implements Serializable{
 	private static final long serialVersionUID = 637694787336335869L;
 	
 	//state members
+	@JsonView(FileView.Minimal.class)
 	private long id;
+	
+	@JsonView(FileView.Minimal.class)
 	private String filename;
+	
+	@JsonView(FileView.Minimal.class)
 	private Date addedOn ;	
+	
+	@JsonView(FileView.Minimal.class)
 	private FileStatus status;
+	
+	@JsonView(FileView.Minimal.class)
 	private User addedBy;
+	
+	@JsonIgnore
 	private FileType fileType;
+	
+	@JsonIgnore
+	private Project project;
 	
 	//constructors
 	public AppFile() {}
 	
-	public AppFile(String filename, Date addedOn, FileStatus status,User addedBy, FileType fileType) {
+	public AppFile(String filename, Date addedOn, FileStatus status,
+			User addedBy, FileType fileType, Project project) {
 		super();
 		this.filename = filename;
 		this.addedOn = addedOn;
 		this.status = status;
 		this.addedBy = addedBy;
 		this.fileType = fileType;
+		this.project = project;
 	}
 	
-	public AppFile(long id, String filename, Date addedOn, FileStatus status,User addedBy, FileType fileType) {
+	public AppFile(long id, String filename, Date addedOn, FileStatus status,
+			User addedBy, FileType fileType, Project project) {
 		super();
 		this.id = id;
 		this.filename = filename;
@@ -53,8 +74,11 @@ public class AppFile implements Serializable{
 		this.status = status;
 		this.addedBy = addedBy;
 		this.fileType = fileType;
+		this.project = project;
 	}
-	
+
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	@Column(name="ID")
@@ -91,7 +115,7 @@ public class AppFile implements Serializable{
 	}
 	
 	@JoinColumn(name="UPLOADEDBY")
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	public User getAddedBy() {
 		return addedBy;
 	}
@@ -108,6 +132,16 @@ public class AppFile implements Serializable{
 		this.fileType = fileType;
 	}
 	
+	@ManyToOne
+	@JoinColumn(name="PROJECTID")
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

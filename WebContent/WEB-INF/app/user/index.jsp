@@ -36,7 +36,6 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li><a href="#/" class="themify">My Projects</a></li>
-					<li><a href="#/newemployee" class="themify">Add New Employee</a></li>
 				</ul>
 			</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" data-ng-view></div>
@@ -72,10 +71,10 @@
 	<script src="components/ui-bootstrap.min.js"></script>
 	<script src="components/angular-route.min.js"></script>
 
-	<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<!-- 	<!-- Just to make our placeholder images work. Don't actually copy the next line!
 	<script src="components/holder.min.js"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="components/ie10-viewport-bug-workaround.js"></script>
+	IE10 viewport hack for Surface/desktop Windows 8 bug
+	<script src="components/ie10-viewport-bug-workaround.js"></script> -->
 	
 	<!-- loading providers -->
 	<script src="app/common/services/HttpService.js"></script>
@@ -90,21 +89,24 @@
 	<script src="app/user/js/controllers/EmployeeController.js"></script>
 	<script src="app/user/js/controllers/NewEmployeeController.js"></script>
 	<script src="app/user/js/providers/EmployeeProvider.js"></script>
-	
-	<script src="app/common/directives/fileuploadattribute.js"></script>
-	<script src="app/common/services/rmsServices.js"></script>
-	<script src="app/common/services/fileUploadService.js"></script>
-	
 	<script src="app/user/js/controllers/FilesController.js"></script> -->
-	
+		
 	<!-- loading controllers -->
 	<script src="app/user/js/controllers/ProjectListController.js"></script>
 	<script src="app/user/js/controllers/ProjectDetailsController.js"></script>
 	<script src="app/user/js/controllers/RequirementDetailsController.js"></script>
+	<script src="app/user/js/controllers/AddRequirementController.js"></script>
+	<script src="app/user/js/controllers/AddChildRequirementController.js"></script>
+	<script src="app/user/js/controllers/UpdateRequirementController.js"></script>
 	
 	<!-- loading directives -->
 	<script src="app/common/directives/rmsDirectives.js"></script>
 	<script src="app/common/directives/userNameDirective.js"></script>
+	<script src="app/common/directives/AddLinkDirective.js"></script> 
+	
+		<!-- file upload dependancies -->
+	<script src="app/common/directives/fileuploadattribute.js"></script>
+	<script src="app/common/services/fileUploadService.js"></script>
 
 </body>
 </html>

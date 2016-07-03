@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +22,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.enums.RmsEnums.ElaborationStatus;
+import cyb.rms.rest.view.ElaborationView;
 
 @Entity
 @Table(name = "ELABORATIONS")
@@ -33,13 +35,28 @@ public class Elaboration implements Serializable {
 	private static final long serialVersionUID = 4112167127514138700L;
 	
 	//state members
+	@JsonView(ElaborationView.Minimal.class)
 	private long id;
+	
+	@JsonView(ElaborationView.Minimal.class)
 	private String title;
+	
+	@JsonView(ElaborationView.Detailed.class)
 	private String elaboration;
+	
+	@JsonView(ElaborationView.Minimal.class)
 	private User elaborationBy;
+	
+	@JsonView(ElaborationView.Minimal.class)
 	private Date createdOn;
+	
+	@JsonView(ElaborationView.Minimal.class)
 	private Date lastModifiedOn;
+	
+	@JsonView(ElaborationView.Minimal.class)
 	private ElaborationStatus status;
+	
+	@JsonView(ElaborationView.Detailed.class)
 	private List<AppFile> files;
 	
 	//constructor
@@ -83,7 +100,8 @@ public class Elaboration implements Serializable {
 		return id;
 	}
 	public void setId(long id) {
-		this.id = id;
+			this.id = id;
+		
 	}
 
 	@Column(name = "TITLE", length = 255, nullable = false)
@@ -91,7 +109,9 @@ public class Elaboration implements Serializable {
 		return title;
 	}
 	public void setTitle(String title) {
-		this.title = title;
+		
+			this.title = title;
+		
 	}
 
 	@Column(name = "ELABORATION", length = 4096, nullable = false)
@@ -99,7 +119,9 @@ public class Elaboration implements Serializable {
 		return elaboration;
 	}
 	public void setElaboration(String elaboration) {
-		this.elaboration = elaboration;
+		
+			this.elaboration = elaboration;
+		
 	}
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -109,7 +131,9 @@ public class Elaboration implements Serializable {
 	}
 
 	public void setElaborationBy(User elaborationBy) {
-		this.elaborationBy = elaborationBy;
+		
+			this.elaborationBy = elaborationBy;
+		
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -119,7 +143,8 @@ public class Elaboration implements Serializable {
 	}
 
 	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+		
+			this.createdOn = createdOn;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -129,6 +154,7 @@ public class Elaboration implements Serializable {
 	}
 
 	public void setLastModifiedOn(Date lastModifiedOn) {
+		
 		this.lastModifiedOn = lastModifiedOn;
 	}
 
@@ -139,6 +165,7 @@ public class Elaboration implements Serializable {
 	}
 
 	public void setStatus(ElaborationStatus status) {
+		
 		this.status = status;
 	}
 
@@ -153,6 +180,7 @@ public class Elaboration implements Serializable {
 	}
 
 	public void setFiles(List<AppFile> files) {
+		
 		this.files = files;
 	}
 

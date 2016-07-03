@@ -26,12 +26,24 @@ angular.module("rms.httpService").provider('RequirementService',function() {
 					return deferred.promise;
 
 				},
-				
-				removeRequirement : function(objRequirement){
+				addNewChildRequirement : function(objRequirement) {
+
 					var deferred = $q.defer();
-					$log.debug("Sending [delete] at "+baseUrl+relativeUrl+"/"+objRequirement.id+" with data :"+objRequirement);
+					$log.debug("Sending [put] at " + baseUrl + relativeUrl);
+					$http.put(baseUrl + relativeUrl+"/child", objRequirement).then(function(data) {
+						deferred.resolve(data);
+					}, function(error) {
+						throw error;
+					});
+					return deferred.promise;
+
+				},
+				
+				removeRequirement : function(id){
+					var deferred = $q.defer();
+					$log.debug("Sending [delete] at "+baseUrl+relativeUrl+"/"+id);
 					$http({
-						url:baseUrl+relativeUrl+"/"+objRequirement.id,
+						url:baseUrl+relativeUrl+"/"+id,
 						method:'DELETE',
 					})
 					.then(function(data){
@@ -42,23 +54,22 @@ angular.module("rms.httpService").provider('RequirementService',function() {
 					return deferred.promise;
 				},
 				
-				updateRequirement : function(objRequirement){
-					
+				updateRequirement : function(objRequirement){					
 					var deferred  = $q.defer();
 					$log.debug("Sending [post] at" + baseUrl + relativeUrl);
 					$http.post(baseUrl+relativeUrl,objRequirement)
 					.then(function(data){
-						
 						deferred.resolve(data);
 					},function(error){
 						throw error;
 					});
+					return deferred.promise;
 				},
 				
-				getAllRequirements : function(projId) {
+				getAllChildRequirements : function(reqId) {
 					var deferred = $q.defer();
 					$log.debug("Sending [get] at " + baseUrl + relativeUrl);
-					$http.get(baseUrl + relativeUrl+"/"+projId).then(function(data) {
+					$http.get(baseUrl + relativeUrl+"/child/"+reqId).then(function(data) {
 						deferred.resolve(data);
 					}, function(error) {
 						throw error;
@@ -66,11 +77,11 @@ angular.module("rms.httpService").provider('RequirementService',function() {
 					return deferred.promise;
 				},
 				
-				getRequirementById : function(objRequirement){
+				getRequirementById : function(reqId){
 					var deferred = $q.defer();
 					$log.debug("Sending [get] at " + baseUrl + relativeUrl);
 					$http({
-						url:baseUrl+relativeUrl+"/"+objRequirement.id,
+						url:baseUrl+relativeUrl+"/"+reqId,
 						method: 'GET'
 					})
 					.then(function(data){

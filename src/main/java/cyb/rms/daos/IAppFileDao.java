@@ -18,6 +18,9 @@ public interface IAppFileDao {
 	public AppFile updateAppFile(AppFile apfl) throws DaoException;
 	
 	@Transactional
+	public AppFile saveOrUpdateAppFile(AppFile apfl) throws DaoException;
+
+	@Transactional
 	public AppFile removeAppFile(AppFile apfl) throws DaoException;
 
 	@Transactional(readOnly=true)

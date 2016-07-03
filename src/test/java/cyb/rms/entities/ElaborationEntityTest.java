@@ -36,8 +36,8 @@ public class ElaborationEntityTest {
 	@Rollback(value=true)
 	public void saveTest() throws Exception{
 		User user = new User("mayank393","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
-		AppFile file1 = new AppFile("FileName.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE);
-		AppFile file2 = new AppFile("FileName2.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE);
+		AppFile file1 = new AppFile("FileName.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE,null);
+		AppFile file2 = new AppFile("FileName2.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE,null);
 		
 		List<AppFile> files = new LinkedList<AppFile>();
 		files.add(file1);

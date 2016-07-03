@@ -23,6 +23,18 @@ angular.module("userApp").config(['$routeProvider','$logProvider',"BaseUrlServic
 		templateUrl : 'app/user/partials/RequirementDetails.html',
 		controller : 'RequirementDetailsController'
 	})
+	.when('/addRequirement/project/:projId',{
+		templateUrl : 'app/user/partials/AddRequirement.html',
+		controller : 'AddRequirementController'
+	})
+	.when('/addRequirement/requirement/:reqId',{
+		templateUrl : 'app/user/partials/AddRequirement.html',
+		controller : 'AddChildRequirementController'
+	})
+	.when('/requirement/update/:reqId',{
+		templateUrl : 'app/user/partials/UpdateRequirement.html',
+		controller : 'UpdateRequirementController'
+	})
 	.otherwise({
 		redirectTo : '/'
 	});

@@ -2,7 +2,9 @@ package cyb.rms.services.impls;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import cyb.rms.daos.IEmployeeDao;
@@ -12,6 +14,7 @@ import cyb.rms.exceptions.DaoException;
 import cyb.rms.services.IRequirementService;
 
 @Service
+@Secured("hasRole('ROLE_USER')")
 public class RequirementService implements IRequirementService {
 
 	@Autowired

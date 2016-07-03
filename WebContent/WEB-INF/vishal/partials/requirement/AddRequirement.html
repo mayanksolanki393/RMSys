@@ -1,5 +1,4 @@
-<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}"
-	close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</uib-alert>
+<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout="5000">{{alert.msg}}</uib-alert>
 <div class="panel panel-default theme-panel">
 	<div class="panel-heading">Add Requirement Form</div>
 	<div class="panel-content">
@@ -21,9 +20,13 @@
 						 placeholder="Enter Short Title"
 						data-ng-model="addReq.shortTitle" required />
 				</div>
-				<div>
-				<label for="typeField">Choose Type</label>
-					<select class="form-control" data-ng-model="addReq.type" required>
+				<div class="form-group">
+					<label for="linksField">Enter Link</label> 
+					<input type="text" class="form-control" id="linksField" placeholder="Enter Links" data-ng-model="addReq.links" required />
+				</div>
+				<div class="form-group">
+					<label for="typeField">Choose Type</label>
+					<select id="typeField" class="form-control" data-ng-model="addReq.type" required>
 							<option value="none">NONE</option>
 							<option value="newFeature">NEW FEATURE</option>
 							<option value="enhancement">ENHANCEMENT</option>
@@ -33,12 +36,6 @@
 						</select>
 				</div>
 				<div class="form-group">
-					<label for="linksField">Enter Link</label> 
-					<input type="text" class="form-control" id="linksField"
-						 placeholder="Enter Links"
-						data-ng-model="addReq.links" required />
-				</div>
-				<div>
 				<label for="priorityField">Choose Priority</label>
 					<select class="form-control" data-ng-model="addReq.priority" required>
 							<option value="none">NONE</option>
@@ -50,7 +47,7 @@
 							<option value="tbd">TBD</option>
 						</select>
 				</div>
-				<div>
+				<div class="form-group">
 				<label for="statusField">Choose Status</label>
 					<select class="form-control" data-ng-model="addReq.status" required>
 							<option value="none">NONE</option>

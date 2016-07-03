@@ -31,7 +31,6 @@ angular.module('userApp').controller("ProjectListController",["$scope","$filter"
 	}*/
 	
 	$scope.$watch('search.searchBy',function(){
-		console.log("here");
 		$scope.search.searchFor="";
 		$scope.search.searchFor.id="";
 		$scope.search.searchFor.title="";

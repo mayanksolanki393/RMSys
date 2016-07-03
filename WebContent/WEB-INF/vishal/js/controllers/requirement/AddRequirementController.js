@@ -1,8 +1,9 @@
-var addRequirement = angular.module('myRequirmentApp');
-
-addRequirement.controller("addRequirementController",["$scope","$uibModal","RequirementService",function($scope,$uibModal,requirementService){
+angular.module('userApp').controller("AddRequirementController",["$scope","$uibModal","$routeParams","RequirementService",function($scope,$uibModal,$routeProvider,requirementService){
 	
 	$scope.addReq = {
+			project:{
+				id:$routeParams.projId
+			},
 			type:"none",
 			priority:"none",
 			status:"none"

@@ -31,7 +31,7 @@ public class AppFileEntityTest {
 	@Rollback(value=true)
 	public void saveTest() throws Exception{
 		User user = new User("mayank393","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
-		AppFile file = new AppFile("FileName.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE);	
+		AppFile file = new AppFile("FileName.txt", new Date(), FileStatus.ACTIVE, user, FileType.ELABORATION_FILE,null);	
 		fileGenericDao.save(file);
 	}
 }

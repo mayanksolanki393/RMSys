@@ -1,48 +1,92 @@
-<div class="center" data-ng-show="{{requirements.size==0}}">
-	<div class="bigText">
-		<span>Loading...</span>
+<span class="breadcrumb" style="font-size: 1.3em">
+	<a href="#/">My Projects</a> /
+	{{project.title}}
+</span>
+	 
+<div class="panel panel-default theme-panel" style="margin-top:15px;">
+	<div class="panel-heading">
+		<span style="font-size: 1.3em">{{project.title}}
+		<sup class="label label-warning">Project</sup></span>
 	</div>
-	<div class="progress" style="width: 50%">
-		<div class="progress-bar progress-bar-striped active"
-			role="progressbar" style="width: 100%"></div>
-	</div>
-</div>
-<div data-ng-show="{{requirements.size!=0}}" class="table-responsive" data-ng-init="refresh()">
-	
-	<div class="panel panel-default theme-panel">
-		<div class="panel-heading">
-			<span style="font-size: 1.3em">Filter Requirements</span>
+	<div class="panel-content">
+		<div data-ng-show="{{project.requirements.size!=0}}" class="table-responsive" data-ng-init="refresh()">
+		
+		<div class="panel panel-default theme-panel" >
+			<div class="panel-heading" data-toggle="collapse" data-target="#reqDetails" data-parent="#accordian" style="cursor: pointer;">
+				<span style="font-size: 1.3em">Project Details</span>
+			</div>
+			<div id="reqDetails" class="panel-collapse collapse">
+				<table class="table">
+					<tr>
+						<th>id</th>
+						<td>{{project.id}}</td>
+					</tr>
+					<tr>
+						<th>Short Title</th>
+						<td>{{project.shortTitle}}</td>
+					</tr>
+					<tr>
+						<th>Title</th>
+						<td>{{project.title}}</td>
+					</tr>
+					<tr>
+						<th>Description</th>
+						<td><p>{{project.description}}</p></td>
+					</tr>
+					<tr>
+						<th>Created On</th>
+						<td>{{project.createdOn | date:'dd MMMM, yyyy hh:mm:ss a' }}</td>
+					</tr>
+					<tr>
+						<th>Last Modified On</th>
+						<td>{{project.lastModifiedOn | date:'dd MMMM, yyyy hh:mm:ss a' }}</td>
+					</tr>
+					<tr>
+						<th>status</th>
+						<td><span class="label label-pill label-info" style="padding:5px;margin:5px;">{{project.status}}</span></td>
+					</tr>
+					<tr>
+						<th>creator</th>
+						<td>
+							{{project.creator.username}}
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
-		<div class="panel-content">
-			<div style="padding:6px;">
-				<div class="form-inline">
-					<div class="input-group">
-						<span class="input-group-addon">Filter By</span> 
-						<select class="form-control" data-ng-model="filter.filterBy">
-							<option value="none">NONE</option>
-							<option value="dateRange">DATE RANGE</option>
-						</select>
+		
+		<div class="panel panel-default theme-panel">
+			<div class="panel-heading" data-toggle="collapse" data-target="#reqFilter" style="cursor: pointer;">
+				<span style="font-size: 1.3em">Filter Requirements</span>
+			</div>
+			<div id="reqFilter" class="panel-collapse collapse">
+				<div style="padding:6px;">
+					<div class="form-inline">
+						<div class="input-group">
+							<span class="input-group-addon">Filter By</span> 
+							<select class="form-control" data-ng-model="filter.filterBy">
+								<option value="none">NONE</option>
+								<option value="dateRange">DATE RANGE</option>
+							</select>
+						</div>
+						<div class="input-group" data-ng-show="isVisibleForFilter('dateRange')">
+							<span class="input-group-addon">After Date</span> 
+							<input type="date" class="form-control"  data-ng-model="filter.after">
+							<span class="input-group-addon">Before Date</span> 
+							<input type="date" class="form-control"  data-ng-model="filter.before">
+						</div>
+						<!-- <div class="input-group" data-ng-show="isVisibleForFilter('dateOfBirth')">
+							<span class="input-group-addon">Before Date</span> 
+							<input type="date" class="form-control"  data-ng-model="filter.before">
+						</div> -->
 					</div>
-					<div class="input-group" data-ng-show="isVisibleForFilter('dateRange')">
-						<span class="input-group-addon">After Date</span> 
-						<input type="date" class="form-control"  data-ng-model="filter.after">
-						<span class="input-group-addon">Before Date</span> 
-						<input type="date" class="form-control"  data-ng-model="filter.before">
-					</div>
-					<!-- <div class="input-group" data-ng-show="isVisibleForFilter('dateOfBirth')">
-						<span class="input-group-addon">Before Date</span> 
-						<input type="date" class="form-control"  data-ng-model="filter.before">
-					</div> -->
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="panel panel-default theme-panel">
+		<div class="panel panel-default theme-panel">
 		<div class="panel-heading">
 			<div style="padding-bottom: 4px;">
-				<div
-					style="font-size: 1.3em; display: inline-block; margin-top: 5px;">
-					Requirement List</div>
+				<div style="font-size: 1.3em; display: inline-block; margin-top: 5px; cursor: pointer;" data-toggle="collapse" data-target="#requirements">Requirement List</div>
 				<div class="form-inline pull-right">
 					<div class="input-group">
 						<span class="input-group-addon">Search By</span> 
@@ -96,7 +140,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="search" class="panel-content scrollable">
+		<div id="requirements" class="panel-collapse collapse">
+			<div>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -120,7 +165,7 @@
 				</thead>
 				<tbody>
 					<tr
-						data-ng-repeat="requirement in requirements | filter:search.searchFor | orderBy:sortColumn:desc">
+						data-ng-repeat="requirement in project.requirements | filter:{status:'!DELETED'} | filter:{parent:null}| filter:search.searchFor | orderBy:sortColumn:desc">
 						<td>{{requirement.id}}</td>
 						<td>{{requirement.shortTitle}}</td>
 						<td><a href="#/requirement/{{requirement.id}}">{{requirement.title}}</a></td>
@@ -130,9 +175,17 @@
 						<td><span class="label label-pill label-info">{{requirement.priority}}</span></td>
 						<td><span class="label label-pill label-info">{{requirement.status}}</span></td>
 					</tr>
+					<tr>
+						<td colspan="8" style="text-align: center;"><a href="#/addRequirement/project/{{project.id}}">Add New Requirement</a></td>
+					</tr>
 				</tbody>
 			</table>
+			</div>
 		</div>
 	</div>
 </div>
+	
+	</div>
+</div>
+
 

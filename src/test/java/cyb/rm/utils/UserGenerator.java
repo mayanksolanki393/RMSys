@@ -23,13 +23,14 @@ public class UserGenerator {
 	IUserDao userDao;
 	
 	@Test
-	@Rollback(value=false)
+	@Rollback(value=true)
 	public void saveTest() throws Exception{
 	
 		
-			User user = new User("admin","pass", "admin@cybage.com", Role.ROLE_USER, "RMS Administrator", "Java", null);
-			userDao.saveUser(user);
+		User user = new User("admin","pass", "admin@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
+		userDao.saveUser(user);
 	
+		
 		/*User user2 = userDao.getUserByUsername("mayank393");
 		Assert.assertEquals(user.getEmail(),user2.getEmail());
 		Assert.assertEquals(user.getPassword(),user2.getPassword());

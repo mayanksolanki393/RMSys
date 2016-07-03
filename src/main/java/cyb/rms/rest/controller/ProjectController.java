@@ -18,9 +18,10 @@ import cyb.rms.entities.Project;
 import cyb.rms.entities.User;
 import cyb.rms.exceptions.DaoException;
 import cyb.rms.rest.view.ProjectView;
+import cyb.rms.rest.view.ProjectView.ProjectDetailsView;
 import cyb.rms.rest.view.UserView;
 import cyb.rms.services.IProjectService;
-import cyb.rms.services.IUserSevrice;
+import cyb.rms.services.IUserService;
 
 @RestController
 @RequestMapping(path="/project")
@@ -32,7 +33,7 @@ public class ProjectController {
 	IProjectService projService;
 	
 	@Autowired
-	IUserSevrice userService;
+	IUserService userService;
 	
 	@RequestMapping(method=RequestMethod.PUT)
 	public Project addProject(@RequestBody Project project) throws DaoException
@@ -65,6 +66,7 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/{projId}")
+	@JsonView(ProjectView.ProjectDetailsView.class)
 	public Project getProjectById(@PathVariable("projId") long projId) throws DaoException
 	{
 		return projService.findProjectById(projId);

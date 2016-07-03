@@ -10,11 +10,11 @@ import cyb.rms.daos.IEmployeeDao;
 import cyb.rms.daos.IUserDao;
 import cyb.rms.entities.User;
 import cyb.rms.exceptions.DaoException;
-import cyb.rms.services.IUserSevrice;
+import cyb.rms.services.IUserService;
 
 @Service
 @Transactional
-public class UserService implements IUserSevrice {
+public class UserService implements IUserService {
 
 	@Autowired
 	IUserDao userDao;

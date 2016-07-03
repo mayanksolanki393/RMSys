@@ -1,8 +1,7 @@
-angular.module('userApp').controller("ProjectDetailsController",["$scope","$filter","$routeParams","RequirementService",function($scope,$filter,$routeParams,requirementService){
-	$scope.requirements = [];
-	$scope.temp = {};
-	$scope.proj = {
-			id :  $routeParams.projId
+angular.module('userApp').controller("RequirementDetailsController",["$scope","$filter","$routeParams","$uibModal","$location","RequirementService","fileUploadService","BaseUrlService",function($scope,$filter,$routeParams,$uibModal,$location,requirementService,fileUploadService,baseUrlService){
+	$scope.childReqs = [];
+	$scope.requirement = {
+			id :  $routeParams.reqId
 	};
 	
 	$scope.search = {
@@ -16,25 +15,55 @@ angular.module('userApp').controller("ProjectDetailsController",["$scope","$filt
 			after :""
 	};
 	
-	//http calls
-	$scope.refresh = function(){
-		requirementService.getAllRequirements($scope.proj.id)
-		.then(function(response){
-			$scope.requirements = response.data;
-		});
+	$scope.myFile = {};
+	
+	$scope.baseUrl = baseUrlService.getBaseUrl();
+	
+	$scope.uploadFile = function(){
+		 var fd = new FormData();
+	     fd.append("file", $scope.myFile);
+	     fd.append("reqId",$scope.requirement.id);
+	     fileUploadService.uploadFileToUrl(fd,baseUrlService.getBaseUrl()+"upload/file/requirement").then(
+	    		 function(){
+	    			 alert("file uploaded successfully");
+	    			 $scope.refresh();
+	    		 },
+	    		 function(error){
+	    			 alert(error);
+	    		 })
 	}
 	
-	$scope.removeRequirement = function(objRequirement){
-		objRequirement = JSON.parse(angular.toJson(objRequirement));
-		requirementService.removeRequirement(objRequirement)
+	$scope.hasParent = function(){
+		console.log("in function");
+		return $scope.requirement.parent!=null;
+	}
+	
+	//http calls
+	$scope.refresh = function(){
+		requirementService.getRequirementById($scope.requirement.id)
 		.then(function(response){
-			alert(response.data+" removed successfully");
-			$scope.refresh();
+			$scope.requirement = response.data;
+		});
+		
+		requirementService.getAllChildRequirements($scope.requirement.id)
+		.then(function(response){
+			$scope.childReqs = response.data;
+		})
+	}
+	
+	$scope.removeRequirement = function(id){
+		requirementService.removeRequirement(id)
+		.then(function(response){
+			if($scope.requirement.parent!=null){
+				$location.path("/requirement/"+$scope.requirement.parent.id);
+			}
+			else{
+				$location.path("/project/"+$scope.requirement.project.id);
+			}
 		});
 	}
 	
 	$scope.$watch('search.searchBy',function(){
-		console.log("here");
 		$scope.search.searchFor="";
 		$scope.search.searchFor.id="";
 		$scope.search.searchFor.title="";
@@ -104,4 +133,19 @@ angular.module('userApp').controller("ProjectDetailsController",["$scope","$filt
 			}
 		}
 	}
+	
+	 // Confirmation Modal
+	 $scope.confirmModal = {};
+		
+		$scope.openConfirm = function () {
+		     $scope.confirmModal = $uibModal.open({
+		      animation: true,
+		      templateUrl: 'deleteRequirementConfirmationModal.html',
+		      scope : $scope
+		    });
+		};
+		
+		$scope.dismissConfirm = function(){
+			$scope.confirmModal.dismiss();
+		}
 }])

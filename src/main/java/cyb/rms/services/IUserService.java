@@ -10,7 +10,7 @@ import cyb.rms.exceptions.DaoException;
 
 @Service
 @Transactional
-public interface IUserSevrice {
+public interface IUserService {
 	
 	public User addUser(User user) throws DaoException;
 

@@ -1,8 +1,6 @@
-angular.module('userApp').controller("RequirementDetailsController",["$scope","$filter","$routeParams","RequirementService",function($scope,$filter,$routeParams,requirementService){
-	$scope.requirements = [];
-	$scope.temp = {};
-	$scope.req = {
-			id :  $routeParams.reqId
+angular.module('userApp').controller("ProjectDetailsController",["$scope","$filter","$routeParams","ProjectService",function($scope,$filter,$routeParams,projectService){
+	$scope.project = {
+			id :  $routeParams.projId
 	};
 	
 	$scope.search = {
@@ -18,9 +16,9 @@ angular.module('userApp').controller("RequirementDetailsController",["$scope","$
 	
 	//http calls
 	$scope.refresh = function(){
-		requirementService.getAllRequirements($scope.req.id)
+		projectService.getProjectById($scope.project.id)
 		.then(function(response){
-			$scope.requirements = response.data;
+			$scope.project = response.data;
 		});
 	}
 	
@@ -34,7 +32,6 @@ angular.module('userApp').controller("RequirementDetailsController",["$scope","$
 	}
 	
 	$scope.$watch('search.searchBy',function(){
-		console.log("here");
 		$scope.search.searchFor="";
 		$scope.search.searchFor.id="";
 		$scope.search.searchFor.title="";

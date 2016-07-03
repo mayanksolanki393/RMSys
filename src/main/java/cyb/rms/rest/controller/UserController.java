@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import cyb.rms.entities.User;
 import cyb.rms.exceptions.DaoException;
 import cyb.rms.rest.view.UserView;
-import cyb.rms.services.IUserSevrice;
+import cyb.rms.services.IUserService;
 
 @RestController
 @RequestMapping(path="/user")
@@ -26,7 +26,7 @@ public class UserController {
 	private static final Logger LOG = Logger.getLogger(EmployeeController.class);
 	
 	@Autowired
-	IUserSevrice userService;
+	IUserService userService;
 	
 	@RequestMapping(method=RequestMethod.GET,path="/current",produces="text/plain")
 	public String getUsername(Principal principal) throws DaoException{

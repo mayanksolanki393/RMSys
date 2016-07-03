@@ -67,11 +67,11 @@ angular.module("rms.httpService").provider('ProjectService', function() {
 
 				},
 				
-				getProjectById : function(objProject){
+				getProjectById : function(id){
 					var deferred = $q.defer();
 					$log.debug("Sending [get] at " + baseUrl + relativeUrl);
 					$http({
-						url:baseUrl+relativeUrl+"/"+objProject.id,
+						url:baseUrl+relativeUrl+"/"+id,
 						method: 'GET'
 					})
 					.then(function(data){
