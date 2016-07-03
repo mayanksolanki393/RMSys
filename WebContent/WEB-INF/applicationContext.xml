@@ -22,7 +22,6 @@
       </bean>
       
 	<context:component-scan base-package="cyb.rms"></context:component-scan>
-	<s:global-method-security secured-annotations="enabled" pre-post-annotations="enabled" jsr250-annotations="disabled" mode="aspectj"/>
 	<context:annotation-config></context:annotation-config>
 	
 	<import resource="spring-orm-config.xml"/>

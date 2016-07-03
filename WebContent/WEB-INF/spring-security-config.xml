@@ -35,7 +35,9 @@
 
 	<authentication-manager>
 		<authentication-provider user-service-ref="rmsUserDetailsService" >
-			<!-- <password-encoder hash="bcrypt" />     -->
+			 <password-encoder hash="bcrypt" />   
 		</authentication-provider>
 	</authentication-manager>
+	
+	
 </beans:beans>

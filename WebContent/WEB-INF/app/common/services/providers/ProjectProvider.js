@@ -58,7 +58,8 @@ angular.module("rms.httpService").provider('ProjectService', function() {
 				getAllProjects : function() {
 					var deferred = $q.defer();
 					$log.debug("Sending [get] at " + baseUrl + relativeUrl);
-					$http.get(baseUrl + relativeUrl).then(function(data) {
+					$http.get(baseUrl + relativeUrl).then(
+					function(data) {
 						deferred.resolve(data);
 					}, function(error) {
 						throw error;

@@ -45,7 +45,4 @@ public class ProjectService implements IProjectService {
 	public Project findProjectById(long id) throws DaoException {
 		return projDao.getProjectById(id);
 	}
-	
-	
-
 }

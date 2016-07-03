@@ -14,7 +14,6 @@ import cyb.rms.exceptions.DaoException;
 import cyb.rms.services.IRequirementService;
 
 @Service
-@Secured("hasRole('ROLE_USER')")
 public class RequirementService implements IRequirementService {
 
 	@Autowired

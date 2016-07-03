@@ -1,12 +1,11 @@
 /**
  * 
  */
-
 angular.module("userApp",['ngRoute','ui.bootstrap','rms.directives','rms.httpService']);
 
-angular.module("userApp").config(['$routeProvider','$logProvider',"BaseUrlServiceProvider",function($routeProvider,$logProvider,baseUrlService){
+angular.module("userApp").config(['$routeProvider','$logProvider',"BaseUrlServiceProvider",function($routeProvider,$logProvider,baseUrlServiceProvider){
 	
-	baseUrlService.setBaseUrl("http://localhost:6060/rms/")
+	baseUrlServiceProvider.setBaseUrl("http://localhost:6060/rms/");
 	
 	$logProvider.debugEnabled(true);
 	

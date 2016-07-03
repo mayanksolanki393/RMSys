@@ -1,4 +1,4 @@
-angular.module('userApp').controller("ProjectDetailsController",["$scope","$filter","$routeParams","ProjectService",function($scope,$filter,$routeParams,projectService){
+angular.module('userApp').controller("ProjectDetailsController",["$scope","$filter","$routeParams","$uibModal","ProjectService",function($scope,$filter,$routeParams,$uibModal,projectService){
 	$scope.project = {
 			id :  $routeParams.projId
 	};
@@ -11,7 +11,9 @@ angular.module('userApp').controller("ProjectDetailsController",["$scope","$filt
 	$scope.filter = {
 			filterBy:"none",
 			before : "",
-			after :""
+			after :"",
+			status:"",
+			type:""
 	};
 	
 	//http calls
@@ -28,6 +30,9 @@ angular.module('userApp').controller("ProjectDetailsController",["$scope","$filt
 		.then(function(response){
 			alert(response.data+" removed successfully");
 			$scope.refresh();
+		},
+		function(error){
+			$scope.openErrorDialog(error);
 		});
 	}
 	
@@ -41,6 +46,14 @@ angular.module('userApp').controller("ProjectDetailsController",["$scope","$filt
 		$scope.search.searchFor.priority="";
 		$scope.search.searchFor.status="";
 		$scope.search.searchFor.project="";
+	});
+	
+	$scope.$watch('filter.filterBy',function(){
+		console.log("Filter by changed");
+		$scope.filter.before = "";
+		$scope.filter.after ="";
+		$scope.filter.status="";
+		$scope.filter.type="";
 	});
 	
 	$scope.isVisible = function(column){
@@ -85,7 +98,7 @@ angular.module('userApp').controller("ProjectDetailsController",["$scope","$filt
 		else{
 			var beforeDate = "";
 			var afterDate = "";
-			var projectDate = new Date(objProject.dateRange);
+			var projectDate = new Date(objProject.createdOn);
 			if($scope.filter.before!=""){
 				beforeDate = new Date($scope.filter.before);
 			}
@@ -96,9 +109,73 @@ angular.module('userApp').controller("ProjectDetailsController",["$scope","$filt
 				return true;
 			}
 			else{
-				console.log("returning false");
 				return false;
 			}
 		}
 	}
+	
+	$scope.lastMod = function(objProject){
+		if($scope.filter.filterBy!='lastMod'){
+			return true;
+		}
+		else{
+			var beforeDate = "";
+			var afterDate = "";
+			var projectDate = new Date(objProject.lastModifiedOn);
+			if($scope.filter.before!=""){
+				beforeDate = new Date($scope.filter.before);
+			}
+			if($scope.filter.after!=""){
+				afterDate = new Date($scope.filter.after);
+			}
+			if((beforeDate==""||projectDate<beforeDate) && (afterDate==""||projectDate>afterDate)){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
+	
+	$scope.typeFilter = function(objProject){
+		if($scope.filter.filterBy!='type'||$scope.filter.type==""){
+			return true;
+		}
+		else{
+			if(objProject.type==$scope.filter.type){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
+	
+	$scope.statusFilter = function(objProject){
+		if($scope.filter.filterBy!='status' || $scope.filter.status==""){
+			return true;
+		}
+		else{
+			if(objProject.status==$scope.filter.status){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
+	//exception handeling
+	$scope.errorModal = {};
+		
+	$scope.openErrorDialog = function (error) {
+		     $scope.errorModal = $uibModal.open({
+		      animation: true,
+		      templateUrl: 'ErrorMessageDialog.html',
+		      scope : error
+		    });
+		};
+		
+		$scope.dismissErrorModal = function(){
+			$scope.errorModal.dismiss();
+		}
 }])

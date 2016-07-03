@@ -12,8 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import cyb.rms.daos.IGenericDao;
-import cyb.rms.entities.AppFile;
-import cyb.rms.entities.User;
 import cyb.rms.enums.RmsEnums.FileStatus;
 import cyb.rms.enums.RmsEnums.FileType;
 import cyb.rms.enums.RmsEnums.Role;

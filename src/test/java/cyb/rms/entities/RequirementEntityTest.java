@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,13 +45,15 @@ public class RequirementEntityTest {
 	@Test
 	@Rollback(value=false)
 	public void saveTest() throws Exception{
-		User creator = new User("admin","pass", "admin@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		User creator = new User("admin",encoder.encode("pass"), "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
 		
 		List<User> creators = new LinkedList<User>();
 		creators.add(creator);
 		
-		User user1 = new User("ajinkyakhar","pass", "ajinkyakhar@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
-		User user2 = new User("saurabhpa","pass", "saurabhpa@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
+		
+		User user1 = new User("ajinkyakhar",encoder.encode("pass"), "ajinkyakhar@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
+		User user2 = new User("saurabhpa",encoder.encode("pass"), "saurabhpa@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
 		List<User> users = new LinkedList<User>();
 		
 		users.add(user1);

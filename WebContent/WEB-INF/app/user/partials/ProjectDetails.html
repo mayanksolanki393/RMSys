@@ -66,19 +66,41 @@
 							<span class="input-group-addon">Filter By</span> 
 							<select class="form-control" data-ng-model="filter.filterBy">
 								<option value="none">NONE</option>
-								<option value="dateRange">DATE RANGE</option>
+								<option value="dateRange">CREATION DATE</option>
+								<option value="lastMod">LAST MODIFICATION DATE</option>
+								<option value="type">TYPE</option>
+								<option value="status">STATUS</option>
 							</select>
 						</div>
-						<div class="input-group" data-ng-show="isVisibleForFilter('dateRange')">
+						<div class="input-group" data-ng-show="isVisibleForFilter('dateRange') || isVisibleForFilter('lastMod')">
 							<span class="input-group-addon">After Date</span> 
 							<input type="date" class="form-control"  data-ng-model="filter.after">
 							<span class="input-group-addon">Before Date</span> 
 							<input type="date" class="form-control"  data-ng-model="filter.before">
 						</div>
-						<!-- <div class="input-group" data-ng-show="isVisibleForFilter('dateOfBirth')">
-							<span class="input-group-addon">Before Date</span> 
-							<input type="date" class="form-control"  data-ng-model="filter.before">
-						</div> -->
+						<div class="input-group" data-ng-show="isVisibleForFilter('type')">
+							<span class="input-group-addon">Type</span> 
+							<select id="typeField" class="form-control" data-ng-model="filter.type">
+							<option value="NEW FEATURE">NEW FEATURE</option>
+							<option value="ENHANCEMENT">ENHANCEMENT</option>
+							<option value="BUG ISSUE">BUG/ISSUE</option>
+							<option value="TASK">TASK</option>
+							<option value="CUSTOMER REQ">CUSTOMER REQUIREMENT</option>
+						</select>
+						</div>
+						<div class="input-group" data-ng-show="isVisibleForFilter('status')">
+							<span class="input-group-addon">Status</span> 
+							<select class="form-control" data-ng-model="filter.status">
+							<option value="OPEN">OPEN</option>
+							<option value="ASSIGNED">ASSIGNED</option>
+							<option value="IMPLEMENTATAION">IMPLEMENTATION</option>
+							<option value="DEVELOPER TESTING">DEVELOPER TESTING</option>
+							<option value="SUSPENDED">SUSPENDED</option>
+							<option value="QA TESTING">OA TESTING</option>
+							<option value="REOPEN">RE-OPEN</option>
+							<option value="CLOSED">CLOSED</option>
+						</select>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -96,10 +118,6 @@
 							<option value="id">ID</option>
 							<option value="title">TITLE</option>
 							<option value="shortTitle">SHORT TITLE</option>
-							<option value="type">TYPE</option>
-							<option value="links">LINKS</option>
-							<option value="priority">PRIORITY</option>
-							<option value="status">STATUS</option>
 						</select>
 					</div>
 					
@@ -165,7 +183,7 @@
 				</thead>
 				<tbody>
 					<tr
-						data-ng-repeat="requirement in project.requirements | filter:{status:'!DELETED'} | filter:{parent:null}| filter:search.searchFor | orderBy:sortColumn:desc">
+						data-ng-repeat="requirement in project.requirements | filter:{status:'!DELETED'} | filter:{parent:null}|filter:dateRangeFilter|filter:lastMod|filter:typeFilter|filter:statusFilter| filter:search.searchFor | orderBy:sortColumn:desc">
 						<td>{{requirement.id}}</td>
 						<td>{{requirement.shortTitle}}</td>
 						<td><a href="#/requirement/{{requirement.id}}">{{requirement.title}}</a></td>
@@ -187,5 +205,23 @@
 	
 	</div>
 </div>
+
+<script type="text/ng-template" id="ErrorMessageDialog.html">
+ 	   <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="dismissConfirm()">&times;</button>
+                <h4 class="modal-title">Error Message Dialog</h4>
+            </div>
+           
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <h5>{{error}}</h5>
+             </div>
+           
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="dismissErrorModal()">Ok</button>
+            </div>
+</script>
 
 
