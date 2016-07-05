@@ -4,20 +4,27 @@
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:s="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+	
 	<context:component-scan base-package="cyb.rms" />
 	<context:annotation-config />
 	<mvc:annotation-driven />
+	
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 	</bean> 
+	
 	<mvc:resources location="/WEB-INF/components/" mapping="/components/**"/>
 	<mvc:resources location="/WEB-INF/app/" mapping="/app/**"/>
 	<mvc:resources location="/WEB-INF/common/" mapping="/common/**"/>
+	<!--jsr250-annotations="disabled" mode="aspectj"  -->
+	<s:global-method-security secured-annotations="enabled" pre-post-annotations="enabled" /> 
 </beans>

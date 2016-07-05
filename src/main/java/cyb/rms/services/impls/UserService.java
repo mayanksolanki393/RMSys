@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cyb.rms.daos.IEmployeeDao;
 import cyb.rms.daos.IUserDao;
 import cyb.rms.entities.User;
 import cyb.rms.exceptions.DaoException;
-import cyb.rms.services.IUserSevrice;
+import cyb.rms.services.IUserService;
 
 @Service
-public class UserService implements IUserSevrice {
+@Transactional
+public class UserService implements IUserService {
 
 	@Autowired
 	IUserDao userDao;
@@ -33,16 +35,19 @@ public class UserService implements IUserSevrice {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<User> listUsers() throws DaoException {
 		return userDao.listUsers();
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public User findUserById(long id) throws DaoException {
 		return userDao.getUser(id);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public User findUsersByUsername(String userName) throws DaoException {
 		// will be called in spring security
 		return userDao.getUserByUsername(userName);

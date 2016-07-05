@@ -1,10 +1,10 @@
-angular.module("rms.directives").directive('userName', ['$http', function ($http){
+angular.module("rms.directives").directive('userName', ['$http','BaseUrlService', function ($http,baseUrlService){
 	return {
 		restrict : 'A',
 		template : "{{username}}",
 		scope : {},
 		link: function(scope, element, attrs) {
-          $http.get("http://localhost:6060/rms/user/current")
+          $http.get(baseUrlService.getBaseUrl()+"/user/current")
                  .success( function(username){
                 	 scope.username = username;
                  }).error(function(){

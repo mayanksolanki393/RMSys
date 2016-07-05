@@ -10,21 +10,21 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Employee Manager</title>
+<title>Admin Dashboard</title>
 
 <!-- Bootstrap core CSS -->
 <link href="components/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="components/dashboard.css" rel="stylesheet">
-<link href="app/emp-manager/css/MainStyle.css" rel="stylesheet">
+<link href="app/admin/css/MainStyle.css" rel="stylesheet">
 </head>
 
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#/">Resource Management System <sup
+			<a class="navbar-brand" href="#/">Requirment Management System <sup
 				class="label label-danger">Admin</sup></a>
 		</div>
 		<ul class="nav navbar-nav navbar-right" style="margin-right:4px;">
@@ -40,8 +40,8 @@
 					<li><a href="#/newemployee">Add New Employee</a></li>
 				</ul>
 			</div>
-		<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" data-ng-view></div> -->
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" data-ng-view></div>
+			<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div data-ng-controller="FilesController">
 				<ul>
 					<li data-ng-repeat="file in files">
@@ -52,7 +52,7 @@
 					<input type="file" file-model="myFile"> <button class="btn btn-primary" ng-click="uploadFile()">Upload</button> 
 				</div>
 			</div>
-			</div>
+			</div> -->
 			
 		</div>
 	</div>
@@ -77,17 +77,17 @@
 	<script src="components/holder.min.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="components/ie10-viewport-bug-workaround.js"></script>
-	<script src="app/emp-manager/app.js"></script>
+	<script src="app/admin/app.js"></script>
 	<script src="app/common/modules/HttpExceptionHandeler.js"></script>
-	<script src="app/emp-manager/js/controllers/EmployeeController.js"></script>
-	<script src="app/emp-manager/js/controllers/NewEmployeeController.js"></script>
-	<script src="app/emp-manager/js/providers/EmployeeProvider.js"></script>
+	<script src="app/admin/js/controllers/EmployeeController.js"></script>
+	<script src="app/admin/js/controllers/NewEmployeeController.js"></script>
+	<script src="app/admin/js/providers/EmployeeProvider.js"></script>
 	<script src="app/common/directives/rmsDirectives.js"></script>
 	<script src="app/common/directives/fileuploadattribute.js"></script>
 	<script src="app/common/services/rmsServices.js"></script>
 	<script src="app/common/services/fileUploadService.js"></script>
 	<script src="app/common/directives/userNameDirective.js"></script>
-	<script src="app/emp-manager/js/controllers/FilesController.js"></script>
+	<script src="app/admin/js/controllers/FilesController.js"></script>
 
 	
 </body>

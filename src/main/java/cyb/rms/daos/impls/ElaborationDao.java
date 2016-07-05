@@ -1,7 +1,9 @@
 package cyb.rms.daos.impls;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -25,8 +27,10 @@ public class ElaborationDao implements IElaborationDao{
 	}
 
 	@Override
-	public Elaboration updateElaboration(Elaboration elab) throws DaoException {
-		return elabGenericDao.update(elab);
+	public Elaboration updateElaboration(Elaboration updElab) throws DaoException {
+		Elaboration daoElabo = elabGenericDao.get(updElab.getId());
+		BeanUtils.copyProperties(updElab, daoElabo);
+		return elabGenericDao.update(daoElabo);
 	}
 
 	@Override

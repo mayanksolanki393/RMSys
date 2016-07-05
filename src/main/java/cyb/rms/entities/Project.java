@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.enums.RmsEnums.ProjectStatus;
+import cyb.rms.rest.view.ProjectView;
+import cyb.rms.rest.view.UserView;
+import cyb.rms.rest.view.ProjectView.ProjectDetailsView;
 
 @Entity
 @Table(name="PROJECTS")
@@ -33,15 +42,34 @@ public class Project implements Serializable{
 	private static final long serialVersionUID = 1581627407212776620L;
 	
 	//state members
+	@JsonView(ProjectView.List.class)
 	private long id;
+	
+	@JsonView(ProjectView.List.class)
 	private String title;
+	
+	@JsonView(ProjectView.ProjectDetailsView.class)
 	private String description;	
+	
+	@JsonView(ProjectView.List.class)
 	private String shortTitle;	
+	
+	@JsonView(ProjectView.List.class)
 	private User creator;
+	
+	@JsonView(ProjectView.List.class)
 	private Date createdOn;
+	
+	@JsonView(ProjectView.List.class)
 	private Date lastModifiedOn;
+	
+	@JsonView(ProjectView.List.class)
 	private ProjectStatus status;
+	
+	@JsonView(ProjectView.ProjectDetailsView.class)
 	private List<User> users;
+	
+	@JsonView(ProjectView.ProjectDetailsView.class)
 	private List<Requirement> requirements;	
 	
 	//constructors
@@ -151,10 +179,11 @@ public class Project implements Serializable{
 	}
 	
 
-	 @ManyToMany(cascade=CascadeType.ALL)
+	 @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	 @JoinTable(name="USERS_PROJECTS",  
 	    joinColumns={@JoinColumn(name="PROJECTID")},  
 	    inverseJoinColumns={@JoinColumn(name="USERID")})
+	@JsonView(UserView.WithoutProject.class)
 	public List<User> getUsers() {
 		return users;
 	}
@@ -162,7 +191,8 @@ public class Project implements Serializable{
 		this.users = users;
 	}
 	
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="project",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@Fetch(FetchMode.SELECT)
 	public List<Requirement> getRequirements() {
 		return requirements;
 	}

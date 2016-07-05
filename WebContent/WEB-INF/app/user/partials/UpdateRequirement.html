@@ -1,0 +1,153 @@
+<span class="breadcrumb" style="font-size: 1.3em;width:100%;display:block;">
+	<a href="#/">My Projects</a> /
+	<a href="#/project/{{addReq.project.id}}">{{addReq.project.title}}</a> /
+	<span data-ng-show="hasParent()">.. /<a href="#/requirement/{{addReq.parent.id}}">{{addReq.parent.title}} / </a></span>
+	{{addReq.title}}
+</span>
+<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout="10000">{{alert.msg}}</uib-alert>
+<div class="panel panel-default theme-panel" data-ng-init="refresh()">
+	<div class="panel-heading">Update Requirement Form</div>
+	<div class="panel-content">
+		<div style="padding: 15px">
+			<form class="form" data-ng-submit=openConfirm() >
+				<div class="form-group">
+					<label for="shortTitleField">Enter Short Title</label> 
+					<input type="text" class="form-control" id="shortTitleField"
+						 placeholder="Enter Short Title"
+						data-ng-model="addReq.shortTitle" required autofocus />
+				</div>
+				<div class="form-group">
+					<label for="titleField">Enter Title</label> 
+					<input type="text" class="form-control" id="titleField"
+						placeholder="Enter Title" data-ng-model="addReq.title" required autofocus/>
+				</div>
+				<div class="form-group">
+					<label for="descriptionField">Enter Description</label> 
+					<textarea class="form-control" id="descriptionField"
+						placeholder="Enter Description" data-ng-model="addReq.description" required rows="6"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="linksField">Links</label> 
+					<!-- <input type="text" class="form-control" id="linksField" placeholder="Enter Links" data-ng-model="addReq.links" required /> -->
+					<ul>
+						<li data-ng-repeat="link in addReq.links"><a href="{{link}}" target="_blank">{{link}}</a> <a data-ng-click="removeLink($index)" style="cursor: pointer;color:#aa2323">remove</a></li>
+					</ul>
+					<span data-add-link data-links="addReq.links"></span>
+				</div>
+				<div class="form-group">
+				<label for="priorityField">Constraints</label>
+					<div class="data-list-group">
+						<div class="data-list-item" data-ng-repeat="constraint in inputs.constraints">
+							<div class="checkbox" style="margin-left:25px;">
+								<label><input type="checkbox" value="{{constraint}}" data-ng-click="toggleSelection(constraint)" data-ng-checked="addReq.constraints.indexOf(constraint)!=-1">{{constraint}}</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="typeField">Choose Type</label>
+					<select id="typeField" class="form-control" data-ng-model="addReq.type" required>
+							<option value="NEW FEATURE">NEW FEATURE</option>
+							<option value="ENHANCEMENT">ENHANCEMENT</option>
+							<option value="BUG ISSUE">BUG/ISSUE</option>
+							<option value="TASK">TASK</option>
+							<option value="CUSTOMER REQ">CUSTOMER REQUIREMENT</option>
+						</select>
+				</div>
+				
+				<div class="form-group">
+				<label for="priorityField">Choose Priority</label>
+					<select class="form-control" data-ng-model="addReq.priority" required>
+							<option value="TRIVIAL">TRIVIAL</option>
+							<option value="MINOR">MINOR</option>
+							<option value="MAJOR">MAJOR</option>
+							<option value="CRITICAL">CRITICAL</option>
+							<option value="BLOCKER">BLOCKER</option>
+							<option value="TBD">TBD</option>
+						</select>
+				</div>
+				
+				<div class="form-group">
+				<label for="statusField">Choose Status</label>
+					<select class="form-control" data-ng-model="addReq.status" required>
+							<option value="OPEN">OPEN</option>
+							<option value="ASSIGNED">ASSIGNED</option>
+							<option value="IMPLEMENTATAION">IMPLEMENTATION</option>
+							<option value="DEVELOPER TESTING">DEVELOPER TESTING</option>
+							<option value="SUSPENDED">SUSPENDED</option>
+							<option value="QA TESTING">OA TESTING</option>
+							<option value="REOPEN">RE-OPEN</option>
+							<option value="CLOSED">CLOSED</option>
+						</select>
+				</div>
+				<br>
+				<div class="form-group">
+				<input type="Submit" class="btn btn-primary" value="Update"> 
+					<input type="reset" class="btn btn-default" value="Clear">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="newRequirementConfirmationModal.html">
+ 	   <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="dismissConfirm()">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+           
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <h5>Do you want to update the requirement with the following details?</h5>
+                <table class="table table-bordered">
+                	<tr>
+                		<td>Project Title</td>
+                		<td>{{addReq.title}}</td>
+                	</tr>
+                	<tr>
+                		<td>Short Title</td>
+                		<td>{{addReq.shortTitle}}</td>
+                	</tr>
+					<tr>
+                		<td>Description</td>
+                		<td>{{addReq.description}}</td>
+                	</tr> 
+					<tr>
+                		<td>Type</td>
+                		<td>{{addReq.type}}</td>
+                	</tr>
+					<tr>
+                		<td>Constraints</td>
+                		<td>
+							<ul>
+								<li data-ng-repeat="link in addReq.links">{{link}}</li>
+							</ul>
+						</td>
+                	</tr>  
+					<tr>
+                		<td>Link</td>
+                		<td>
+							<ul>
+								<li data-ng-repeat="constraint in addReq.constraints">{{constraint}}</li>
+							</ul>
+						</td>
+                	</tr> 
+					<tr>
+                		<td>Status</td>
+                		<td>{{addReq.priority}}</td>
+                	</tr>
+                	<tr>
+                		<td>Status</td>
+                		<td>{{addReq.status}}</td>
+                	</tr>
+                </table>
+            </div>
+           
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-ng-click="update()">yes</button>
+                <button type="button" class="btn btn-default" ng-click="dismissConfirm()">No! Wait</button>
+            </div>
+</script>

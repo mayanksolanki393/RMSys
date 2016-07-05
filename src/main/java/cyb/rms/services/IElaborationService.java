@@ -9,6 +9,7 @@ import cyb.rms.entities.*;
 import cyb.rms.exceptions.DaoException;
 
 @Service
+@Transactional
 public interface IElaborationService {
 	
 	public Elaboration addElaboration(Elaboration elab) throws DaoException;
@@ -17,8 +18,10 @@ public interface IElaborationService {
 
 	public Elaboration updateElaboration(Elaboration elab) throws DaoException;
 
+	@Transactional(readOnly=true)
 	public List<Elaboration> listElaborations() throws DaoException;
 
+	@Transactional(readOnly=true)
 	public Elaboration findElaborationById(long id) throws DaoException;
 
 }

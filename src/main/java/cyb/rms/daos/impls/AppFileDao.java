@@ -45,4 +45,9 @@ public class AppFileDao implements IAppFileDao{
 		return appFileGenericDao.get(apflId);
 	}
 
+	@Override
+	public AppFile saveOrUpdateAppFile(AppFile apfl) throws DaoException {
+		return appFileGenericDao.saveOrUpdate(apfl);
+	}
+
 }

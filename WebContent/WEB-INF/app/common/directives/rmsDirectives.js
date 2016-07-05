@@ -1,1 +1,1 @@
-angular.module("rms.directives",[]);
+angular.module("rms.directives",['rms.httpService']);

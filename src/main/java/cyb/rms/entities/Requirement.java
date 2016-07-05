@@ -13,6 +13,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,11 +27,18 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import cyb.rms.enums.RmsEnums;
 import cyb.rms.enums.RmsEnums.Constraints;
 import cyb.rms.enums.RmsEnums.Priority;
 import cyb.rms.enums.RmsEnums.RequirementStatus;
 import cyb.rms.enums.RmsEnums.Type;
+import cyb.rms.rest.view.RequirementView;
 
 @Entity
 @Table(name="REQUIREMENTS")
@@ -39,23 +47,59 @@ public class Requirement implements Serializable{
 	private static final long serialVersionUID = -8613161674360685751L;
 	
 	//state members
+	@JsonView(RequirementView.Minimal.class)
 	private long id;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private String title;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private String description;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private String shortTitle;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private List<User> creators;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	List<User> contributors;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Date createdOn;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Date lastModifiedOn;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Type type;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	Set<Constraints> constraints;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	Set<String> links;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private	List<Elaboration> elaborations;	
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Requirement parent;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private	Priority priority;
+	
+	@JsonView(RequirementView.Minimal.class)
 	private RequirementStatus status;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private List<AppFile> files;
+	
+	@JsonView(RequirementView.Detailed.class)
 	private Project	project;
+	
+	@JsonIgnore
+	private List<Requirement> childRequirements;
 	
 	public Requirement(){
 		initNulls();
@@ -124,6 +168,7 @@ public class Requirement implements Serializable{
 		return id;
 	}
 	public void setId(long id) {
+		if(id!=0)
 		this.id = id;
 	}
 	
@@ -132,6 +177,7 @@ public class Requirement implements Serializable{
 		return title;
 	}
 	public void setTitle(String title) {
+		if(title != null)
 		this.title = title;
 	}
 	
@@ -140,6 +186,7 @@ public class Requirement implements Serializable{
 		return description;
 	}
 	public void setDescription(String description) {
+		//if(description != null)
 		this.description = description;
 	}
 	
@@ -148,28 +195,33 @@ public class Requirement implements Serializable{
 		return shortTitle;
 	}
 	public void setShortTitle(String shortTitle) {
+		//if(shortTitle!=null)
 		this.shortTitle = shortTitle;
 	}
 	
-	@ManyToMany(cascade=CascadeType.ALL)  
+	@ManyToMany(fetch=FetchType.EAGER)  
     @JoinTable(name="REQUIREMENT_CREATOR",  
     joinColumns={@JoinColumn(name="REQUIREMENTID")},  
-    inverseJoinColumns={@JoinColumn(name="CREATORID")})  
+    inverseJoinColumns={@JoinColumn(name="CREATORID")}) 
+	@Fetch(FetchMode.SELECT)
 	public List<User> getCreators() {
 		return creators;
 	}
 	public void setCreators(List<User> creator) {
+		//if(creator!=null)
 		this.creators = creator;
 	}
 	
-	@ManyToMany(cascade=CascadeType.ALL)  
+	@ManyToMany(fetch=FetchType.EAGER)  
     @JoinTable(name="REQUIREMENT_CONTRIBUTORS",  
     joinColumns={@JoinColumn(name="REQUIREMENTID")},  
-    inverseJoinColumns={@JoinColumn(name="CONTRIBUTORID")})  
+    inverseJoinColumns={@JoinColumn(name="CONTRIBUTORID")}) 
+	@Fetch(FetchMode.SELECT)
 	public List<User> getContributors() {
 		return contributors;
 	}
 	public void setContributors(List<User> contributor) {
+		//if(contributor!=null)
 		this.contributors = contributor;
 	}
 	
@@ -179,6 +231,7 @@ public class Requirement implements Serializable{
 		return createdOn;
 	}
 	public void setCreatedOn(Date createdOn) {
+		//if(createdOn!=null)
 		this.createdOn = createdOn;
 	}
 	
@@ -188,6 +241,7 @@ public class Requirement implements Serializable{
 		return lastModifiedOn;
 	}
 	public void setLastModifiedOn(Date lastModifiedOn) {
+		//if(lastModifiedOn!=null)
 		this.lastModifiedOn = lastModifiedOn;
 	}
 	
@@ -197,47 +251,55 @@ public class Requirement implements Serializable{
 		return type;
 	}
 	public void setType(Type type) {
+		//if(type!=null)
 		this.type = type;
 	}
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@Column(name="CONSTRAINTS")
+	@Fetch(FetchMode.SELECT)
 	public Set<Constraints> getConstraints() {
 		return constraints;
 	}
 	public void setConstraints(Set<Constraints> constraints) {
+		//if(constraints!=null)
 		this.constraints = constraints;
 	}
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@Column(name="LINKS")
+	@Fetch(FetchMode.SELECT)
 	public Set<String> getLinks() {
 		return links;
 	}
 	public void setLinks(Set<String> links) {
+		//if(links!=null)
 		this.links = links;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL)  
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)  
     @JoinTable(name="REQUIREMENT_ELABORATIONS",  
     joinColumns={@JoinColumn(name="REQUIREMENTID")},  
-    inverseJoinColumns={@JoinColumn(name="ELABORATIONID")})  
+    inverseJoinColumns={@JoinColumn(name="ELABORATIONID")}) 
+	@Fetch(FetchMode.SELECT)
 	public List<Elaboration> getElaborations() {
 		return elaborations;
 	}
 	public void setElaborations(List<Elaboration> elaboration) {
+		//if(elaborations!=null)
 		this.elaborations = elaboration;
 	}
 	
-	@ManyToOne(cascade=CascadeType.ALL)  
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)  
     @JoinTable(name="REQUIREMENT_SUBREQUIREMENTS",  
-    joinColumns={@JoinColumn(name="REQUIREMENTID")},  
-    inverseJoinColumns={@JoinColumn(name="SUBREQUIREMENTID")})  
+    joinColumns={@JoinColumn(name="SUBREQUIREMENTID")},  
+    inverseJoinColumns={@JoinColumn(name="REQUIREMENTID")}) 
 	public Requirement getParent() {
 		return parent;
 	}
 	public void setParent(Requirement parent) {
+		//if(parent!=null)
 		this.parent = parent;
 	}
 
@@ -247,6 +309,7 @@ public class Requirement implements Serializable{
 		return priority;
 	}
 	public void setPriority(Priority priority) {
+		//if(priority!=null)
 		this.priority = priority;
 	}
 
@@ -256,31 +319,46 @@ public class Requirement implements Serializable{
 		return status;
 	}
 	public void setStatus(RequirementStatus status) {
+		//if(status!=null)
 		this.status = status;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL)  
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)  
     @JoinTable(name="REQUIREMENT_FILES",  
     	joinColumns={@JoinColumn(name="REQUIREMENTID")},  
-    	inverseJoinColumns={@JoinColumn(name="FILEID")})  
+    	inverseJoinColumns={@JoinColumn(name="FILEID")})
+	@Fetch(FetchMode.SELECT)
 	public List<AppFile> getFiles() {
 		return files;
 	}
 	public void setFiles(List<AppFile> files) {
+		//if(files!=null)
 		this.files = files;
 	}
 	
-	@ManyToOne(cascade=CascadeType.ALL)  
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)  
     @JoinTable(name="PROJECT_REQUIREMENTS",  
     joinColumns={@JoinColumn(name="PROJECTID")},  
-    inverseJoinColumns={@JoinColumn(name="REQUIREMENTID")})  
+    inverseJoinColumns={@JoinColumn(name="REQUIREMENTID")})
+	@Fetch(FetchMode.SELECT)
 	public Project getProject() {
 		return project;
 	}
 	public void setProject(Project project) {
+		//if(project!=null)
 		this.project = project;
 	}
 	
+	@OneToMany(mappedBy="parent",fetch=FetchType.EAGER)
+	public List<Requirement> getChildRequirements() {
+		return childRequirements;
+	}
+
+	public void setChildRequirements(List<Requirement> childRequirements) {
+		//if(childRequirements!=null)
+		this.childRequirements = childRequirements;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -321,6 +399,9 @@ public class Requirement implements Serializable{
 		}
 		if(files==null){
 			files = new LinkedList<AppFile>();
+		}
+		if(childRequirements==null){
+			childRequirements = new LinkedList<>();
 		}
 	}
 }

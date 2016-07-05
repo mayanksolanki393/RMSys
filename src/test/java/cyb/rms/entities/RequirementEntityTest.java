@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -42,15 +43,17 @@ public class RequirementEntityTest {
 	IGenericDao<Requirement, Long> requirementGenericDao;
 	
 	@Test
-	@Rollback(value=true)
+	@Rollback(value=false)
 	public void saveTest() throws Exception{
-		User creator = new User("mayank393","pass", "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		User creator = new User("admin",encoder.encode("pass"), "mayankso@cybage.com", Role.ROLE_ADMIN, "RMS Administrator", "Java", null);
 		
 		List<User> creators = new LinkedList<User>();
 		creators.add(creator);
 		
-		User user1 = new User("ajinkyakhar","pass", "ajinkyakhar@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
-		User user2 = new User("saurabhpa","pass", "saurabhpa@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
+		
+		User user1 = new User("ajinkyakhar",encoder.encode("pass"), "ajinkyakhar@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
+		User user2 = new User("saurabhpa",encoder.encode("pass"), "saurabhpa@cybage.com", Role.ROLE_USER, "Sr. Software Developer", "Java", null);
 		List<User> users = new LinkedList<User>();
 		
 		users.add(user1);
@@ -76,8 +79,8 @@ public class RequirementEntityTest {
 		links.add("http://www.hibenate.org");
 		
 		//creating elaboration files
-		AppFile file1 = new AppFile("FileName.txt", new Date(), FileStatus.ACTIVE, user1, FileType.ELABORATION_FILE);
-		AppFile file2 = new AppFile("FileName2.txt", new Date(), FileStatus.ACTIVE, user1, FileType.ELABORATION_FILE);
+		AppFile file1 = new AppFile("FileName.txt", new Date(), FileStatus.ACTIVE, user1, FileType.ELABORATION_FILE,project);
+		AppFile file2 = new AppFile("FileName2.txt", new Date(), FileStatus.ACTIVE, user1, FileType.ELABORATION_FILE,project);
 		
 		List<AppFile> elaboFiles1 = new LinkedList<AppFile>();
 		elaboFiles1.add(file1);
@@ -88,8 +91,8 @@ public class RequirementEntityTest {
 		Elaboration elaboration1 = new Elaboration("add user requirement","elaboration description" ,user1, new Date(), new Date(), ElaborationStatus.ACTIVE, elaboFiles1);
 		
 		//creating elaboration files
-		AppFile file3 = new AppFile("FileName3.txt", new Date(), FileStatus.ACTIVE, user2, FileType.ELABORATION_FILE);
-		AppFile file4 = new AppFile("FileName4.txt", new Date(), FileStatus.ACTIVE, user2, FileType.ELABORATION_FILE);
+		AppFile file3 = new AppFile("FileName3.txt", new Date(), FileStatus.ACTIVE, user2, FileType.ELABORATION_FILE,project);
+		AppFile file4 = new AppFile("FileName4.txt", new Date(), FileStatus.ACTIVE, user2, FileType.ELABORATION_FILE,project);
 				
 		List<AppFile> elaboFiles2 = new LinkedList<AppFile>();
 		elaboFiles2.add(file3);
@@ -105,8 +108,8 @@ public class RequirementEntityTest {
 		Assert.assertEquals(2, elaborations.size());
 		
 		//creating elaboration files
-		AppFile file5 = new AppFile("FileName5.txt", new Date(), FileStatus.ACTIVE, creator, FileType.REQUIREMENT_FILE);
-		AppFile file6 = new AppFile("FileName6.txt", new Date(), FileStatus.ACTIVE, creator, FileType.REQUIREMENT_FILE);
+		AppFile file5 = new AppFile("FileName5.txt", new Date(), FileStatus.ACTIVE, creator, FileType.REQUIREMENT_FILE,project);
+		AppFile file6 = new AppFile("FileName6.txt", new Date(), FileStatus.ACTIVE, creator, FileType.REQUIREMENT_FILE,project);
 		
 		List<AppFile> requirFiles = new LinkedList<AppFile>();
 		requirFiles.add(file5);
